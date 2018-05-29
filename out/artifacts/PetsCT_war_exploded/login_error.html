@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login.html</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+      <link rel="shortcut icon" href="./resource/images/favicon.ico">
+      <link rel="stylesheet" href="./resource/css/bootstrap.min.css">
+      <link rel="stylesheet" href="./resource/css/font-awesome.min.css">
+      <link rel="stylesheet" href="./resource/css/AdminLTE.min.css">
+      <link rel="stylesheet" href="./resource/css/skins/_all-skins.min.css">
+      <link rel="stylesheet" href="./resource/css/sweetalert2.min.css">
+      <script src="./resource/js/vue.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+  <div class="content" id="login_config">
+      <div class="header">
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+          <h1 style="color: #2BB8AA;font-family: '华文楷体';font-weight:bolder;margin: 0 0 0 0">宠物社区</h1>
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
+          <p style="color: #2BB8AA;font-family: '华文楷体';font-weight:bolder;margin-bottom: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;community</p>
+      </div>
+      <div class="row">
+          <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+          <div class="col-lg-5 col-md-5 col-sm-4 col-xs-4">
+              <img src="resource/images/left.jpg" alt="">
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-7 col-xs-7">
+              <div class="bs-example bs-example-form" style="padding-top:25%">
+                  <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-8 input-group" >
+                      <div class="input-group">
+                          <span class="input-group-addon " style="border-radius: 10px 0 0 10px"><i class="fa fa-users"></i></span>
+                          <input v-model="currentInfo.user_name" class="col-xs-10 col-sm-6 col-md-6 col-lg-8  form-control" style="border-radius:0 10px 10px 0" type="text" name="user_name" placeholder="用户名...">
+                      </div>
+                  </div>
+                  <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-8 input-group" style="padding-top: 10px;">
+                      <div class="input-group" >
+                          <span class="input-group-addon" style="border-radius: 10px 0 0 10px"><i class="fa fa-key"></i></span>
+                          <input v-model="currentInfo.password" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-control" style="border-radius:0 10px 10px 0" type="password" name="password" placeholder="密码...">
+                      </div>
+                  </div>
+                  <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-8 input-group" style="padding-top: 30px;">
+                      <button id="login" @click="querylogin()" class="col-xs-12 col-sm-6 col-md-6 col-lg-8 form-control" style="background-color: #2DB8AA;border-radius: 5px">
+                          <a style="color: white">登陆</a>
+                      </button>
+                  </div>
+                  <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-8 input-group" style="padding-top: 15px;">
+                      <p style="color: #666">还没有账号？<a href="javascript:void(0)" style="color: #2bb8aa">免费注册</a></p>
+                      <p style="color: #666">——————用合作网账号登录——————</p>
+                      <p style="text-align: center">
+                          <i class="fa fa-qq" style="padding-right: 20px;cursor: pointer;color: #0188FB"></i>
+                          <i class="fa fa-wechat" style="padding-right: 20px;cursor: pointer;color: #8EE153"></i>
+                          <i class="fa fa-chrome" style="padding-right: 20px;cursor: pointer;color:#1AA260;"></i>
+                          <i class="fa fa-weibo" style="padding-right: 20px;cursor: pointer;color: #CC0001"></i>
+                          <i class="fa fa-renren" style="padding-right: 20px;cursor: pointer;color: #006ECE"></i>
+                      </p>
+                  </div>
+              </div>
+              <!--<div class="bs-example bs-example-form">
+                  <input type="text" v-model="currentInfo.user_name">
+                  <input type="text" v-model="currentInfo.password">
+                  <button @click="querylogin()">试试</button>
+              </div>-->
+
+          </div>
+      </div>
+      <div class="col-lg-8 col-md-8 main-footer" style="margin-top: 80px">
+          <p style="color: #999">Copyright © 1998-2018 Waldon. All Rights Reserved.<i class="fa fa-envira" ></i></p>
+
+      </div>
+  </div>
+  <script src="./resource/js/jquery.min.js"></script>
+  <script src="./resource/js/bootstrap.min.js"></script>
+  <script src="./resource/js/sweetalert2.js"></script>
+  <script src="./resource/js/core.js"></script>
+  <!--<script src="resource/js/promise.js"></script>-->
+  <script>
+      var loginDatas={
+            currentInfo:{},
+            userInfo:[]
+      };
+      var contextPath='';
+      var loginVue=new Vue({
+          el:"#login_config",
+          data:loginDatas,
+          mounted:function () {
+              swal({
+                  title:"请先登录系统",
+                  imageUrl:"./resource/images/dog_load.gif",
+                  showConfirmButton: true,
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+              }).then(function () {
+                  $.ajax({
+                      success:function () {
+                          location.href='/PetsCT/login.html';
+                      }
+                  })
+              });
+          }
+      });
+  </script>
+  </body>
+</html>

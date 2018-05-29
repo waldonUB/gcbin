@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+类名 -->
+<mapper namespace="cn.wdq.mapping.BlogInfoDAO">
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <!--<select id="query_blog" resultType="com.alibaba.fastjson.JSONObject">
+        select user_name,head_img,last_time from login_info order by last_time
+    </select>-->
+    <!--发布问题-->
+    <!--blog_classify是内容分类-->
+    <insert id="save_question" parameterType="cn.wdq.entities.BlogInfo" useGeneratedKeys="true" keyProperty="pk_blog">
+        insert into blog_info(cuserid,user_name,head_img,last_time,blog_title,blog_content,blog_praise,blog_comment,blog_image,blog_classify)
+        values (#{cuserid},#{user_name},#{head_img},#{last_time},#{blog_title},#{blog_content},#{blog_praise},#{blog_comment},#{blog_image},#{blog_classify})
+    </insert>
+    <select id="query_blog" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+        select blog_info.*,(case when blog_comment.pk_blog is not null then count(1) else 0 end) as comment_num,
+        blog_praise.praise_num,sub_praise.is_praised
+        from blog_info
+        LEFT JOIN blog_comment on blog_info.pk_blog=blog_comment.pk_blog
+		LEFT JOIN (select blog_info.pk_blog,(case when blog_praise.pk_blog is not null then count(1) else 0 end) as praise_num
+					from blog_info
+					LEFT JOIN blog_praise on blog_info.pk_blog=blog_praise.pk_blog
+					GROUP BY blog_info.pk_blog) blog_praise
+		on blog_info.pk_blog=blog_praise.pk_blog
+		LEFT JOIN (
+					select blog_info.pk_blog,(case when blog_praise.user_name is not null then 1 else 0 end) as is_praised from blog_info
+					LEFT JOIN blog_praise on blog_info.pk_blog=blog_praise.pk_blog and blog_praise.user_name=#{user_name}) sub_praise
+		on blog_info.pk_blog=sub_praise.pk_blog
+        group by blog_info.pk_blog
+        order by blog_info.last_time desc
+
+    </select>
+    <select id="query_comment" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.Integer">
+        select * from blog_comment where pk_blog=#{pk_blog}
+    </select>
+    <!--好像不用这个两个useGeneratedKeys="true" keyProperty="pk_blog" 也可以？-->
+    <insert id="save_comment" parameterType="cn.wdq.entities.CommentInfo">
+        insert into blog_comment(pk_blog,cm_content,cm_praise,cm_time,user_name,head_img)
+        values(#{pk_blog},#{cm_content},#{cm_praise},#{cm_time},#{user_name},#{head_img})
+    </insert>
+    <insert id="save_praise" parameterType="cn.wdq.entities.PraiseInfo">
+        INSERT INTO blog_praise(pk_blog,user_name) VALUES (#{pk_blog},#{user_name})
+    </insert>
+    <!--查询该用户是否在该话题下点过赞-->
+    <select id="is_praised" parameterType="cn.wdq.entities.PraiseInfo" resultType="com.alibaba.fastjson.JSONObject">
+        select * from blog_praise where pk_blog=#{pk_blog} and user_name=#{user_name}
+    </select>
+    <!--如果点过赞就取消赞-->
+    <delete id="cancel_praised" parameterType="cn.wdq.entities.PraiseInfo">
+        delete from blog_praise where pk_blog=#{pk_blog} and user_name=#{user_name}
+    </delete>
+</mapper>
