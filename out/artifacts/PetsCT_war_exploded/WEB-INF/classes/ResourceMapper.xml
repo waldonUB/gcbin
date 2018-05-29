@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名加类名-->
+<mapper namespace="cn.wdq.mapping.ResourceDAO">
+    <!--id应该是接口中方法，结果类型如果没有配置别名则应该使用全名称-->
+    <!--alter table resource_model modify pk_resource INTEGER auto_increment(只有当主键为integer类型的时候可以用自增类型)-->
+    <insert id="save_tree" parameterType="cn.wdq.entities.ResourceModel" useGeneratedKeys="true" keyProperty="pk_resource">
+          insert into resource_model(funcode,funname,restype,resicon,pk_parent,urls,creator,creationtime,modifier,modifiedtime) values (#{funcode},#{funname},#{restype},#{resicon},#{pk_parent},#{urls},#{creator},#{creationtime},#{modifier},#{modifiedtime})
+    </insert>
+    <update id="edit_tree" parameterType="cn.wdq.entities.ResourceModel">
+          update resource_model set pk_resource=#{pk_resource},funcode=#{funcode},funname=#{funname},restype=#{restype},resicon=#{resicon},pk_parent=#{pk_parent},urls=#{urls},creator=#{creator},creationtime=#{creationtime},modifier=#{modifier},modifiedtime=#{modifiedtime} where pk_resource=#{pk_resource}
+    </update>
+    <select id="queryByName" resultType="com.alibaba.fastjson.JSONObject">
+          select * from resource_model where (funcode=#{funcode} or funname=#{funname})
+          <if test="pk_resource!=null">
+              and pk_resource!=#{pk_resource}
+          </if>
+    </select>
+    <select id="query_tree" resultType="com.alibaba.fastjson.JSONObject">
+          SELECT * from resource_model order by funcode
+    </select>
+    <delete id="delete_tree" parameterType="cn.wdq.entities.ResourceModel">
+        delete from resource_model where pk_resource=#{pk_resource}
+    </delete>
+</mapper>

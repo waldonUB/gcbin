@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>admin.html</title>
+    <meta charset="utf-8">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="../../resource/images/favicon.ico">
+    <link rel="stylesheet" href="../../resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resource/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../resource/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../resource/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../../resource/css/hap.css">
+    <link rel="stylesheet" href="../../resource/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="../../resource/css/pagination.css">
+    <link rel="stylesheet" href="../../resource/css/zTreeStyle/zTreeStyle.css">
+    <script src="../../resource/js/vue.min.js"></script>
+    
+    <style>
+      .col a,.user a{
+        color: grey;
+        font-family:sans-serif;
+        font-size: 13px;
+        padding: 6px !important;
+        margin-right: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .col a.active,.user a.active {
+         font-family:sans-serif;
+         font-size: 13px;
+         color: white;
+         background-color: #00b5f5;
+         padding: 6px !important;
+         margin-right: 14px;
+         border-radius: 5px;
+      }
+      th,td{
+        font-size: 13px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  
+  <body>
+  <div class="wrapper" id="admin_el">
+    <top ref="ref_top"></top>
+
+    <section class="content">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">
+                <span id="model_info"><label style="font-family:'楷体';font-size: 16px">模块注册</label></span>
+              </h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" @click="query_usertype('all')" title="刷新">
+                  <i class="fa fa-refresh fa-fw"></i></button>
+              </div>
+              <div id="funTree" class="ztree"></div>
+            </div>
+
+          </div>
+        </div>
+        <!--用户信息模块-->
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" v-show="switch_model" v-cloak>
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">
+              </h3>
+              <span class="col col-lg-2"><label style="font-family:'楷体';font-size: 16px">用户状态：</label></span>
+              <span class="col col-lg-5">
+                  <a  @click="query_usertype('all')" :class="{active:userData.current_usertype==='all'}" >所有用户</a>
+                  <a  @click="query_usertype('online')" :class="{active:userData.current_usertype==='online'} ">在线用户</a>
+                  <a  @click="query_usertype('locked')" :class="{active:userData.current_usertype==='locked'} ">被锁定用户</a>
+                  <a  @click="query_usertype('admin')" :class="{active:userData.current_usertype==='admin'}">管理员账户</a>
+                </span>
+              <span v-show="userData.current_usertype==='all'"  class="input-group form-inline col col-lg-3 col-md-3 col-sm-3 col-xs-3 pull-right" style="padding-bottom: 0">
+                  <input id="n3" v-model="userData.search_name" type="text" class="form-control" placeholder="用户名..." style="border-radius: 5px 0 0 5px">
+                  <a  @click="query_search(userData.search_name)" href="javascript:void(0)" class="input-group-addon" style="border-radius: 0 5px 5px 0"><i class="fa fa-search"></i></a>
+                </span>
+              <!--<span><input class="input-group-sm form-inline" type="text" style="border-radius: 5px; "></span>
+              <button class="btn btn-default btn-sm" style="padding-top: 0;"><i class="fa fa-search"></i></button>-->
+            </div>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-condensed table-hover dataTable col-sm-6"
+                     role="grid" aria-describedby="example1_info" style="overflow: scroll">
+                <thead>
+                <tr role="row" style="white-space:nowrap;">
+                  <th>#</th>
+                  <th>操作</th>
+                  <th>用户ID</th>
+                  <th>用户名</th>
+                  <th>用户密码</th>
+                  <th>用户类型</th>
+                  <th>锁定状态</th>
+                  <th v-show="userData.current_usertype==='online'">在线状态</th>
+                  <th>备注</th>
+                  <th>关注人</th>
+                  <th>粉丝</th>
+                  <th>最近登录时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr role="row" class="odd" v-for="user,item in users" style="white-space: nowrap;">
+                  <td>{{item+1+userData.pageInfo.current*10}}</td>
+                  <td>
+                    <button v-show="userData.current_usertype!=='online'" type="button" class="btn  btn-default btn-sm"
+                            title="删除"  @click="delete_user(user)"><i class="fa fa-trash"></i></button>
+                    <button v-show="userData.current_usertype==='online'" type="button" class="btn  btn-default btn-sm"
+                            title="踢掉"  @click="kicking(user)"><i class="fa fa-grav"></i></button>
+                    <button type="button" class="btn  btn-default btn-sm"
+                            title="修改" @click=""><i class="fa fa-pencil"></i></button>
+                  </td>
+                  <td>{{user.cuserid}}</td>
+                  <td>{{user.user_name}}</td>
+                  <td>{{user.password}}</td>
+                  <td><span class="badge" :class="color_change(user.user_type)">{{translate_usertype(user.user_type)}}</span></td>
+                  <td><span class="badge" :class="color_change(user.is_lock===1?0:2)">{{translate_islock(user.is_lock)}}</span></td>
+                  <td v-show="userData.current_usertype==='online'"><span class="badge" :class="color_change(user.is_online===1?1:2)">{{translate_online(user.is_online)}}</span></td>
+                  <td>备注123</td>
+                  <td></td>
+                  <td></td>
+                  <td>{{user.last_time}}</td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="pages" v-if="page_show">
+                <div id="Pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9 col-md-9" v-show="!switch_model">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title"></h3>
+              <span class="col col-lg-2"><label style="font-family:'楷体';font-size: 16px">模块信息：</label></span>
+              <div class="btn-group pull-right " v-show="switch_button">
+                <button class="btn btn-default btn-sm" :disabled="userData.init_button" @click="edit_tree(current_model)"><i class="fa fa-fw fa-edit"></i>编辑</button>
+                <button class="btn btn-default btn-sm" :disabled="userData.init_button" @click="add_node_tree(current_model)"><i class="fa fa-fw fa-file-excel-o"></i>新增</button>
+                <button class="btn btn-default btn-sm" :disabled="userData.init_button" @click="delete_tree(current_model)"><i class="fa fa-fw fa-trash"></i>删除</button>
+                <button class="btn btn-default btn-sm" @click="add_root_tree()"><i class="fa fa-fw fa-folder-o"></i>新增目录</button>
+              </div>
+              <div class="card form-inline" style="margin-top: 20px">
+                <div class="form-group">
+                  <span class="col col-lg-4 hidden"><label class="col col-lg-3">主键</label>
+                      <input v-model="current_model.pk_resource" type="text" class="form-control" placeholder="主键">
+                  </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">编码</label>
+                                        <input :disabled="input_disable" v-model="current_model.funcode" type="text" class="form-control" placeholder="编码">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">名称</label>
+                                        <input :disabled="input_disable" v-model="current_model.funname" type="text" class="form-control" placeholder="名称">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">资源类型</label>
+                                        <input :disabled="input_disable" v-model="current_model.restype" type="text" class="form-control" placeholder="资源类型">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">图标</label>
+                                        <input :disabled="input_disable" v-model="current_model.resicon" type="text" class="form-control" placeholder="图标">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">上级节点</label>
+                                        <input :disabled="input_disable" v-model="current_model.pk_parent" type="text" class="form-control" placeholder="上级节点">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">路径</label>
+                                        <input :disabled="input_disable" v-model="current_model.urls" type="text" class="form-control" placeholder="路径">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">创建人</label>
+                                        <input :disabled="always_disable" v-model="current_model.creator" type="text" class="form-control" placeholder="创建人">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">创建时间</label>
+                                        <input :disabled="always_disable" v-model="current_model.creationtime" type="text" class="form-control" placeholder="创建时间">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">修改人</label>
+                                        <input :disabled="always_disable" v-model="current_model.modifier" type="text" class="form-control" placeholder="修改人">
+                                    </span>
+                  <span class="col col-lg-4"><label class="col col-lg-3">修改时间</label>
+                                        <input :disabled="always_disable" v-model="current_model.modifiedtime" type="text" class="form-control" placeholder="修改时间">
+                                    </span>
+                  <div class="box-tools col-lg-12">
+                      <div class="btn-group pull-right " v-show="!switch_button">
+                        <button class="btn btn-default btn-sm " @click="cancel_tree()"><i class="fa fa-minus-square-o"></i>取消</button>
+                        <button class="btn btn-default btn-sm " @click="save_tree(current_model)"><i class="fa fa-save"></i>保存</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!--<script type="text/x-template" id="page">
+    <ul class="pagination">
+      <li v-show="currentpage != 1" @click="goto(1)"><a href="#">首页</a></li>
+      <li v-show="currentpage != 1" @click="currentpage&#45;&#45; && goto(currentpage&#45;&#45;)"><a href="#">上一页</a></li>
+      <li v-show="all_page != 1" v-for="index in pages" @click="goto(index)"
+          :class="{'active':currentpage == index}" :key="index">
+        <a href="#">{{index}}</a>
+      </li>
+      <li v-show="all_page != currentpage && all_page != 0" @click="currentpage++ && goto(currentpage++)"><a
+              href="#">下一页</a></li>
+      <li v-show="all_page != 0" @click="goto(all_page)"><a href="#">共{{all_page}}页</a></li>
+    </ul>
+  </script>-->
+    <script src="../../resource/js/jquery.min.js"></script>
+    <script src="../../resource/js/jquery.js"></script>
+    <script src="../../resource/js/bootstrap.min.js"></script>
+    <script src="../../resource/js/sweetalert2.min.js"></script>
+    <script src="../../resource/js/components/all-top.js"></script>
+    <script src="../../resource/js/jquery.pagination.js"></script>
+    <script src="../../resource/js/jquery.ztree.all.min.js"></script>
+    <script src="../../resource/js/components/admin.js"></script>
+  </body>
+</html>
