@@ -1,6 +1,5 @@
 ## Community
 一个用SSM框架+Vue.js和MySQL做的javaweb网站
-<<<<<<< HEAD
 
 ###简介：
 1 JDK1.8 <br>
@@ -32,6 +31,4 @@
 Druid连接池监控<br>
 ![image](https://github.com/qq852727515/Community/blob/master/img_history/druid.gif)
 
-=======
-![Image text](https://github.com/qq852727515/Community/img_history/login.gif)
->>>>>>> 634b1512d90209175572d136050d2b5849b64624
+
