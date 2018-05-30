@@ -14,7 +14,7 @@ public class DateTest {
      * */
     @BeforeClass
     public static void sysOut(){
-        System.out.println("试试");
+        System.out.println("试我啊");
     }
     @Test
     public void dateTest(){
