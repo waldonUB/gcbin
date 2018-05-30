@@ -12,7 +12,10 @@ public class DateTest {
     /**
      * 试试github的更新
      * */
-    
+    @BeforeClass
+    public static void sysOut(){
+        System.out.println("试试");
+    }
     @Test
     public void dateTest(){
         String testDate="2015-12-09 00:00:05";
