@@ -187,34 +187,6 @@
                 </div>
             </div>
         </div>
-        <!--写回答(暂时不用了)-->
-        <!--<div class="modal fade" id="answer_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content" style="border-radius: 5px">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">写回答</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label">标题:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="control-label">内容:</label>
-                                <textarea class="form-control" id="message-text" style="min-height: 300px"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary">发布</button>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     </div>
 </div>
 <script src="../../resource/js/jquery.js"></script>
@@ -239,20 +211,11 @@
             {name: "故事闲谈"},
             {name: "宠物图库"},
             {name: "宠物知识竞猜"},
-            {name: "宠物笑话"},
+            {name: "宠物笑话"}
         ],
         classify_new: [],//搜索框选项
         is_selected: 'N'//判断搜索框里面的元素有没有被点击
     };
-    /*$(document).ready(function () {
-        var content_data={
-            head_img:'<div style="font-size: 15px">网易MuMu(安卓模拟器),是网易官方推出的精品游戏服务平台,安装后可在电脑上运行各类游戏与应用,具备全面兼容、操作流畅、智能辅助等特点,每天还会为您推荐火热的应用.</div>',
-            current_data:{
-                blog_title:"title"
-            }
-        };
-        content_data.current_data=content_data.current_data.push({cuserid:topDatas.userInfo.cuserid})
-    });*/
     Vue.component('content_template', {
         template: content_data.head_img
     });
@@ -436,17 +399,9 @@
                         if(result.success){
                             Vue.set(content_data.blog_info[index],'praise_num',content_data.blog_info[index].praise_num+1);
                             Vue.set(content_data.blog_info[index],'is_praised',1);//可以动态改变v-show的状态
-                            /*swal({
-                                text:result.message,
-                                type:'success'
-                            });*/
                         }else{
                             Vue.set(content_data.blog_info[index],'praise_num',content_data.blog_info[index].praise_num-1);
                             Vue.set(content_data.blog_info[index],'is_praised',0);
-                            /*swal({
-                                text:result.message,
-                                type:'success'
-                            });*/
                         }
 
                     }

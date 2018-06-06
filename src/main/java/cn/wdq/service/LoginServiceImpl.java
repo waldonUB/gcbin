@@ -53,7 +53,8 @@ public class LoginServiceImpl implements LoginService{
 	/**
 	 * 获取所有用户信息的方法
 	 * */
-	public List<UserInfo> getAllUser(){
+	@Override
+	public List<UserInfo> login(UserInfo userInfo){
 		/*list.clear();//清除list里面残留的数据
 		StringBuffer sb=new StringBuffer(" select * from sm_user");
 		try {
@@ -84,7 +85,7 @@ public class LoginServiceImpl implements LoginService{
 		}*/
 		//访问数据库
 		//loadLogin();
-		List<UserInfo> userInfos=uIDImpl.getAllUserInfo();
+		List<UserInfo> userInfos=uIDImpl.login(userInfo);
 		return userInfos;
 
 	}
@@ -93,11 +94,9 @@ public class LoginServiceImpl implements LoginService{
 	 * @param json user_name
 	 * @return true 没有同名  false 存在同名
 	 * */
+	@Override
 	public boolean has_same(JSONObject json){
-		//ApplicationContext ctx=new ClassPathXmlApplicationContext("springmvc-servlet.xml");
-		//UIDImpl uIDImpl=ctx.getBean("uIDImpl",UIDImpl.class);
-		List list=new ArrayList();
-		list=uIDImpl.hasSame(json);
+		List list = uIDImpl.hasSame(json);
 		if(list.isEmpty()){
 			return true;
 		}

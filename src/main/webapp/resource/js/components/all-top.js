@@ -114,7 +114,7 @@ Vue.component("top",{
                     });
                     setTimeout(function () {
                         $.ajax({
-                            url:'/PetsCT/loginout',
+                            url:'/PetsCT/login_out',
                             data:JSON.stringify({"user_name":topDatas.userInfo.user_name}),
                             dataType:'json',
                             type:'POST',
@@ -129,13 +129,13 @@ Vue.component("top",{
         },
         query_userinfo:function () {
             $.ajax({
-                url:'/PetsCT/queryuserinfo',
+                url:'/PetsCT/query_userinfo',
                 data:JSON.stringify({"head_img":topDatas.head_image}),
                 dataType:'json',
                 type:'POST',
                 contentType: "application/json; charset=utf-8",
                 success:function (result) {
-                    //如果直接粘贴网址是没有登陆信息的
+                    //直接粘贴网址是没有登陆信息的
                     if(result.data===null){
                         location.href='/PetsCT';
                     }/*else if(result.data.user_type===1){
@@ -175,7 +175,7 @@ Vue.component("top",{
                     var password2=$("#newpwd2").val().trim();
                     if(password===password2){
                         $.ajax({
-                            url:"/PetsCT/editpassword",
+                            url:"/PetsCT/edit_password",
                             data:JSON.stringify({"user_name":topDatas.userInfo.user_name,"password":password}),
                             dataType:'json',
                             type:'POST',

@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+/**
+ * Session监听器(好久之前的代码,先不动)
+ * @author waldon
+ * */
 public class SessionListener implements HttpSessionListener {
     String jdbc="com.mysql.jdbc.Driver";
     String connection="jdbc:mysql://localhost:3306/db_stanley";
@@ -40,7 +43,6 @@ public class SessionListener implements HttpSessionListener {
                 con = DriverManager.getConnection(connection,"root","123456");
                 pst=con.prepareStatement(sb);
                 pst.executeUpdate(sb);
-                System.out.println("强制登陆成功");
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }finally {
@@ -52,8 +54,6 @@ public class SessionListener implements HttpSessionListener {
             logger.error("session失效时注销用户失败"+e);
             e.printStackTrace();
         }
-        //HttpServletResponse response = ServletActionContext.getResponse();
-        //HttpServletResponse httpServletResponse= null;//有错,用spring @auto注入，request(失败，Session监听器不能自动注入)
     }
 
 }

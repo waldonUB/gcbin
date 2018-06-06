@@ -18,4 +18,12 @@ public class IteratorTest {
         }
         System.out.println(list);
     }
+
+    public static void main(String[] args) {
+        DateTest dateTest=new DateTest();
+        IOTest ioTest=new IOTest();
+        ioTest.test02(dateTest);
+        ioTest.test03();
+        ioTest.test04();
+    }
 }

@@ -2,17 +2,33 @@ package cn.wdq.entities;
 
 import java.io.Serializable;
 
+/**
+ * 功能注册模块
+ * @author waldon
+ * */
+
 public class ResourceModel implements Serializable {
+    /**节点主键*/
     private String pk_resource;
+    /**节点编码*/
     private String funcode;
+    /**节点名称*/
     private String funname;
+    /**节点类型*/
     private String restype;
+    /**节点图表*/
     private String resicon;
+    /**父节点主键*/
     private String pk_parent;
+    /**节点地址*/
     private String urls;
+    /**创建人*/
     private String creator;
+    /**创建时间*/
     private String creationtime;
+    /**修改人*/
     private String modifier;
+    /**修改时间*/
     private String modifiedtime;
 
     public String getPk_resource() {

@@ -15,10 +15,10 @@ public class TestMybatisSpringJava {
         ApplicationContext ctx=new ClassPathXmlApplicationContext("springmvc-servlet.xml");
         UIDImpl uIDImpl=ctx.getBean("uIDImpl",UIDImpl.class);
         //访问数据库
-        List userInfos=uIDImpl.getAllUserInfo();
-        for (Object userInfo:userInfos){
-            System.out.println(userInfo);
-        }
-        assertNotNull(userInfos);
+//        List userInfos=uIDImpl.getAllUserInfo();
+//        for (Object userInfo:userInfos){
+//            System.out.println(userInfo);
+//        }
+//        assertNotNull(userInfos);
     }
 }

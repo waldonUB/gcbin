@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--命名空间应该是对应接口的包名+类名 -->
+<!--命名空间：对应接口的包名+类名 -->
 <mapper namespace="cn.wdq.mapping.BlogInfoDAO">
-    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <!--id是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
     <!--<select id="query_blog" resultType="com.alibaba.fastjson.JSONObject">
         select user_name,head_img,last_time from login_info order by last_time
     </select>-->
@@ -33,7 +33,7 @@
     <select id="query_comment" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.Integer">
         select * from blog_comment where pk_blog=#{pk_blog}
     </select>
-    <!--好像不用这个两个useGeneratedKeys="true" keyProperty="pk_blog" 也可以？-->
+    <!--不用这个两个useGeneratedKeys="true" keyProperty="pk_blog" 也可以？-->
     <insert id="save_comment" parameterType="cn.wdq.entities.CommentInfo">
         insert into blog_comment(pk_blog,cm_content,cm_praise,cm_time,user_name,head_img)
         values(#{pk_blog},#{cm_content},#{cm_praise},#{cm_time},#{user_name},#{head_img})

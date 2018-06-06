@@ -10,12 +10,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface LoginService {
-	String LOGIN_SESSION_INFO="login_session_info";
-	String LAST_CHECK_TIME = "last_check_time"; 
 	/**
-	 * 获取所有用户信息
+	 * 登录验证
 	 * */
-	List<UserInfo> getAllUser();
+	List<UserInfo> login(UserInfo userInfo);
 	/**
 	 * 检查是否有同名用户
 	 * */

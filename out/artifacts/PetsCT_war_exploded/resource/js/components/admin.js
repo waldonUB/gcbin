@@ -6,20 +6,12 @@ $(function () {
         userData.switch_model=false;
     })
     /*$n3.keyup(function (event) {//1.对数据库压力有点大，2.如果用chang方法要失去焦点才行
-        console.log("666");//看一下数据库执行几次（随便：试试tomcat能不能用热部署搞进去）
         adminVue.query_search(userData.search_name)
     })*/
 });
-/*$(document).ready(function(){
-    $("a").toggle(function(){
-            $("body").css("background-color","green");},
-        function(){
-            $("body").css("background-color","red");},
-        function(){
-            $("body").css("background-color","yellow");}
-    );
-});*/
-
+/**
+ * 自己写的分页，样式有点丑，暂时先不用了...
+ * */
 /*var pageData={
   currentpage:1,
   all_page:5,
@@ -148,16 +140,6 @@ var adminVue=new Vue({
         },
         //分页跳转方法
         goto: function () {
-            /*swal({
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                text: '加载数据....',
-                imageUrl: contextPath + "/resource/images/preloader.gif",
-                showConfirmButton: false
-            }).catch(swal.noop);*/
-            //这里可以发送ajax请求
-            /*var  query = Object.assign({},dataModel.querycondition);
-            query.pages = this.pageInfo.current + 1;*/
             $.ajax({
                 url:'/PetsCT/query_usertype',
                 data:JSON.stringify({"user_type":"all","page":userData.pageInfo.current*10}),
@@ -211,17 +193,10 @@ var adminVue=new Vue({
             });
         },
         /**
-         * 模糊查询方法
+         * 动态模糊查询方法
          * */
         query_search:function (resdata) {
             var user_name=resdata.trim();
-            /*swal({
-                text:"加载中...",
-                imageUrl:"../resource/images/preloader.gif",
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            }).catch(swal.noop());*/
             $.ajax({
                 url:'/PetsCT/query_search',
                 data:JSON.stringify({"user_name":user_name}),
@@ -364,7 +339,7 @@ var adminVue=new Vue({
                         topDatas.root_info=[];
                         if(userData.add_edit===true){//新增态
                             userData.resource.push(result.data[0]);
-                            //Vue.set(userData,'resource',userData.resource);//push似乎没有动态生成(push可以动态生成，不需要set)
+                            //Vue.set(userData,'resource',userData.resource);//push可以动态生成，不需要set
                             topDatas.treeInfo.push(result.data[0]);
                             for(var n=0;n<topDatas.treeInfo.length;n++){
                                 if(topDatas.treeInfo[n].pk_parent===0){

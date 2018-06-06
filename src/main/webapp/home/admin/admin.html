@@ -44,7 +44,6 @@
   <body>
   <div class="wrapper" id="admin_el">
     <top ref="ref_top"></top>
-
     <section class="content">
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
@@ -79,8 +78,6 @@
                   <input id="n3" v-model="userData.search_name" type="text" class="form-control" placeholder="用户名..." style="border-radius: 5px 0 0 5px">
                   <a  @click="query_search(userData.search_name)" href="javascript:void(0)" class="input-group-addon" style="border-radius: 0 5px 5px 0"><i class="fa fa-search"></i></a>
                 </span>
-              <!--<span><input class="input-group-sm form-inline" type="text" style="border-radius: 5px; "></span>
-              <button class="btn btn-default btn-sm" style="padding-top: 0;"><i class="fa fa-search"></i></button>-->
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered table-condensed table-hover dataTable col-sm-6"
@@ -191,20 +188,6 @@
       </div>
     </section>
   </div>
-
-  <!--<script type="text/x-template" id="page">
-    <ul class="pagination">
-      <li v-show="currentpage != 1" @click="goto(1)"><a href="#">首页</a></li>
-      <li v-show="currentpage != 1" @click="currentpage&#45;&#45; && goto(currentpage&#45;&#45;)"><a href="#">上一页</a></li>
-      <li v-show="all_page != 1" v-for="index in pages" @click="goto(index)"
-          :class="{'active':currentpage == index}" :key="index">
-        <a href="#">{{index}}</a>
-      </li>
-      <li v-show="all_page != currentpage && all_page != 0" @click="currentpage++ && goto(currentpage++)"><a
-              href="#">下一页</a></li>
-      <li v-show="all_page != 0" @click="goto(all_page)"><a href="#">共{{all_page}}页</a></li>
-    </ul>
-  </script>-->
     <script src="../../resource/js/jquery.min.js"></script>
     <script src="../../resource/js/jquery.js"></script>
     <script src="../../resource/js/bootstrap.min.js"></script>

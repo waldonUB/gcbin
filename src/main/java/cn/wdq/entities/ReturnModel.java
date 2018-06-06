@@ -1,43 +1,31 @@
 package cn.wdq.entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class ReturnModel {
-	/**
-	 * 接口业务是否处理成功
-	 */
+/**
+ * Controller类数据返回类型
+ * @author waldon
+ * */
+
+public class ReturnModel implements Serializable {
+	/**接口业务是否处理成功*/
 	boolean success = false;
-	
-	/**
-	 * 是否需要重定向到登录界面
-	 */
+	/** 是否需要重定向到登录界面*/
 	boolean redirectLogin = false;
-	
-	/**
-	 * 返回状态
-	 */
+	/**返回状态*/
 	int status=0;
-	/**
-	 * 返回消息
-	 */
+	/**返回消息*/
 	String message;
-	/**
-	 * 单据号
-	 */
+	/**单据号*/
 	String billno;
-	/**
-	 * 单据主键
-	 */
+	/**单据主键*/
 	String pk_bill;
-	/**
-	 * 单据类型
-	 */
+	/**单据类型*/
 	String vbilltype;
-	/**
-	 * 返回数据
-	 */
+	/**返回数据*/
 	Object data;
-	
+	/**返回多个数据*/
 	HashMap<String, Object> props = new HashMap<String, Object>();
 
 	public boolean isSuccess() {

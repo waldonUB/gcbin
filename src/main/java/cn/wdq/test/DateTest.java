@@ -37,4 +37,7 @@ public class DateTest {
 
 
     }
+    public void test01(){
+        System.out.println("test01");
+    }
 }

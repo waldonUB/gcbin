@@ -2,9 +2,16 @@ package cn.wdq.entities;
 
 import java.io.Serializable;
 
+/**
+ * 社区模块点赞信息
+ * @author waldon
+ * */
 public class PraiseInfo implements Serializable{
+    /**点赞主键*/
     private int pk_praise;
+    /**话题主键*/
     private int pk_blog;
+    /**点赞用户*/
     private String user_name;
 
     public int getPk_praise() {

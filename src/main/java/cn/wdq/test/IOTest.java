@@ -5,6 +5,10 @@ import org.junit.Test;
 import java.io.*;
 
 public class IOTest {
+    private DateTest dateTest;
+//    public IOTest(DateTest dateTest){
+//        this.dateTest=dateTest;
+//    }
     @Test
     public void ioTest(){
         byte[] buffer=new byte[1024];
@@ -30,6 +34,21 @@ public class IOTest {
             }
 
         }
+    }
+
+    public void test02(DateTest dateTest){
+        this.dateTest=dateTest;
+    }
+    public void test03(){
+        dateTest.test01();
+    }
+    public DateTest test04(){
+        System.out.println(dateTest);
+        return dateTest;
+    }
+    public static void main(String[] args) {
+        DateTest dateTest=new DateTest();
+
     }
     //本地
     /*String local_img_base64=img_url.replaceFirst("data:image/gif;base64,","");

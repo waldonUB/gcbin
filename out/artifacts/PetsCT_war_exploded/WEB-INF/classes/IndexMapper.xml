@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--命名空间应该是对应接口的包名+类名 -->
+<!--命名空间：对应接口的包名+类名 -->
 <mapper namespace="cn.wdq.mapping.IndexDAO">
-    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
-    <!--limit 0,n等价于limit n ； limit n,n+1 取的是n+1条数据开始的-->
+    <!--id是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
     <select id="query_last" resultType="com.alibaba.fastjson.JSONObject">
         select user_name,head_img,last_time from login_info  group by user_name  order by last_time desc limit 0,4
     </select>

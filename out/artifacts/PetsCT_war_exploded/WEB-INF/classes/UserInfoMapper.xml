@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--命名空间应该是对应接口的包名+类名 -->
+<!--命名空间：对应接口的包名+类名 -->
 <mapper namespace="cn.wdq.mapping.UserInfoDAO">
-    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
-    <select id="getAllUserInfo" resultType="com.alibaba.fastjson.JSONObject">
-        select * from sm_user
+    <!--id是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <select id="login" resultType="com.alibaba.fastjson.JSONObject" parameterType="cn.wdq.entities.UserInfo">
+        select * from sm_user where user_name=#{user_name} and password=#{password}
     </select>
     <!--有没有相同的名字-->
     <select id="hasSame" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">

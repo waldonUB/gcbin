@@ -4,21 +4,31 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.io.Serializable;
 
+/**
+ * 用户信息
+ * @author waldon
+ */
 public class UserInfo implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+    /**用户主键*/
     private String cuserid;
+    /**用户名*/
     private String user_name;
+    /**密码*/
     private String password;
+    /**生效标记*/
     private int dr;
+    /**用户类型*/
     private int user_type;
+    /**是否锁定状态*/
     private int is_lock;
+    /**是否在线*/
     private int is_online;
+    /**用户头像base64*/
     private String head_img;
+    /**最近登录时间*/
     private String last_time;
+    /**所属地区*/
     private String district;
 
     public String getCuserid() {
@@ -101,18 +111,5 @@ public class UserInfo implements Serializable {
         this.district = district;
     }
 
-    @Override
-    public String toString() {
-        JSONObject json=new JSONObject();
-        return json.toJSONString("{"+
-                "cuserid="+cuserid+
-                ",user_name="+user_name+
-                ",password="+password+
-                ",dr="+dr+
-                ",user_type="+user_type+
-                ",is_lock="+is_lock+
-                ",is_online="+is_online+
-                "}");
-    }
 }
 

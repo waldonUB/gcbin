@@ -18,8 +18,8 @@ public class UIDImpl implements UserInfoDAO{
     }
 
     @Override
-    public List<UserInfo> getAllUserInfo() {
-        return sqlSession.selectList("cn.wdq.mapping.UserInfoDAO.getAllUserInfo");
+    public List<UserInfo> login(UserInfo userInfo) {
+        return sqlSession.selectList("cn.wdq.mapping.UserInfoDAO.login",userInfo);
     }
 
     @Override
@@ -60,9 +60,7 @@ public class UIDImpl implements UserInfoDAO{
     public int deleteOnline(String cuserid) {
         return sqlSession.delete("cn.wdq.mapping.UserInfoDAO.deleteOnline",cuserid);
     }
-    /**
-     * 服务器开始运行时，清除所有已登录的用户信息
-     * */
+
     @Override
     public int clearAll() {
         return sqlSession.delete("cn.wdq.mapping.UserInfoDAO.clearAll");
