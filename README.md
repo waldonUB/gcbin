@@ -16,19 +16,15 @@
 来添加其他页面，也可以放其他网址的超链接。如果作为虚拟节点的话就填一个 # 就可以了
 
 ###效果：
-登录<br>
-![image](https://github.com/qq852727515/Community/blob/master/img_history/login.gif)
 图表和地图<br>
-![image](https://github.com/qq852727515/Community/blob/master/img_history/datascreen.gif)
-用户管理<br>
-![image](https://github.com/qq852727515/Community/blob/master/img_history/user_m.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/datascreen.gif)
 导航栏节点注册<br>
-![image](https://github.com/qq852727515/Community/blob/master/img_history/resource.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/resource.gif)
 头像上传<br>
-![image](https://github.com/qq852727515/Community/blob/master/img_history/individuation.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/individuation.gif)
 话题交流<br>
-![image](https://github.com/qq852727515/Community/blob/master/img_history/community.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/classify.gif)
 Druid连接池监控<br>
-![image](https://github.com/qq852727515/Community/blob/master/img_history/druid.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/druid.gif)
 
 
