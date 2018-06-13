@@ -4,11 +4,12 @@ var top_template='<div class="header col-lg-12" style="background-color: #FFFFFF
     '          <div class="col-lg-12" >\n' +
     '            <span class="col-lg-9 col-md-9 col-sm-7 col-xs-7">' +
     '            <ul class="nav nav-tabs">\n' +
-    '                <li @click="switch_nav(tree_node.funcode)" :class="{active:topDatas.nav_node===tree_node.funcode}" v-for="tree_node,index in root_info" role="presentation">' +
-    '                    <a :href="tree_node.urls===undefined?\'#\':tree_node.urls" class="dropdown-toggle" :data-toggle="tree_node.children.length>0?topDatas.dropdown:\'\'">{{tree_node.funname}} <i :class="tree_node.resicon"></i></a>' +
-    '                    <ul v-if="tree_node.children.length!==undefined&&tree_node.children.length>0" class="dropdown-menu">\n' +
-    '                        <li v-for="second_node,index in tree_node.children"><a :href="second_node.urls===undefined?\'#\':second_node.urls">{{second_node.funname}}<i :class="second_node.resicon" class="col-lg-4 pull-right"></i></a></li>\n' +
-    '                    </ul>' +
+    '                <li :id="index" @click="switch_nav(model.funcode,index)" :class="{active:topDatas.nav_node===model.funcode}" v-for="model,index in treeInfo_new" role="presentation">' +
+    '                    <a :href="model.urls===undefined?\'#\':model.urls" class="dropdown-toggle" :data-toggle="model.children!==undefined?topDatas.dropdown:\'\'">{{model.funname}} <i :class="model.resicon"></i></a>' +
+    '                    <ul v-if="model.children!==undefined" class="dropdown-menu tree">'+
+    '                       <li v-for="model,index in model.children"><a :href="(model.urls===undefined||model.children!==undefined)?\'#\':model.urls">{{model.funname}}<i :class="model.resicon" class="col-lg-4 pull-right"></i>' +
+    '                       </a><treeNode :model="model"></treeNode></li>' +
+    '                   </ul>'+
     '                </li>\n' +
     '            </ul>' +
     '            </span>'+
@@ -36,13 +37,17 @@ var top_template='<div class="header col-lg-12" style="background-color: #FFFFFF
     '                  <a href="javascript:void(0)" class="btn btn-default btn-flat" @click="edit_password()">修改密码</a>\n' +
     '                </div>\n' +
     '                <div class="pull-right">\n' +
-    '                  <a href="javascript:void(0)" class="btn btn-default btn-flat" @click="loginout" style="margin-right: 0;">注销登录</a>\n' +
+    '                  <a href="javascript:void(0)" class="btn btn-default btn-flat" @click="login_out" style="margin-right: 0;">注销登录</a>\n' +
     '                </div></li>'+
     '               </ul>'+
     '            </div>'+
     '          </div>\n' +
     '        </div>\n' +
     '      </div>';
+var tree_template='<ul v-if="model.children!==undefined">' +
+    '<li v-for="model,index in model.children">' +
+    '<a :href="(model.urls===undefined||model.children!==undefined)?\'#\':model.urls">{{model.funname}}<i :class="model.resicon" class="col-lg-4 pull-right"></i></a>' +
+    '<treeNode :model="model"></li></treeNode></ul>';
 var topDatas={
     head_image:null,
     logo:"../../resource/images/one_piece.jpg",
@@ -53,7 +58,8 @@ var topDatas={
     base64:'',
     nav_node:'',
     root_info:[],
-    dropdown:'dropdown'
+    dropdown:'dropdown',
+    treeInfo_new:[]
 };
 var img_result = {
 
@@ -73,7 +79,12 @@ function loadImageFile() {
     var oFile=document.getElementById("file").files[0];
     oFReader.readAsDataURL(oFile);
 }*/
-
+Vue.component("treeNode",{
+    template:tree_template,
+    props:{
+        model:topDatas
+    }
+});
 
 Vue.component("top",{
     template:top_template,
@@ -84,10 +95,10 @@ Vue.component("top",{
 
     },
     methods:{
-        loginout:function () {
+        login_out:function () {
             if(topDatas.update_pwd===true){
                     $.ajax({
-                        url:'/PetsCT/loginout',
+                        url:'/PetsCT/login_out',
                         data:JSON.stringify({"user_name":topDatas.userInfo.user_name}),
                         dataType:'json',
                         type:'POST',
@@ -110,61 +121,63 @@ Vue.component("top",{
                         imageUrl:"../../resource/images/dog_load.gif",
                         showConfirmButton: false,
                         allowOutsideClick: false,
-                        allowEscapeKey: false
+                        allowEscapeKey: false,
+                        timer:500
                     });
-                    setTimeout(function () {
-                        $.ajax({
-                            url:'/PetsCT/login_out',
-                            data:JSON.stringify({"user_name":topDatas.userInfo.user_name}),
-                            dataType:'json',
-                            type:'POST',
-                            contentType: "application/json; charset=utf-8",
-                            success:function (result) {
-                                location.href='/PetsCT';
-                            }
-                        });
-                    },2000)
+                    $.ajax({
+                        url:'/PetsCT/login_out',
+                        data:JSON.stringify({"user_name":topDatas.userInfo.user_name}),
+                        dataType:'json',
+                        type:'POST',
+                        contentType: "application/json; charset=utf-8",
+                        success:function (result) {
+                            location.href='/PetsCT';
+                        }
+                    });
                 });
             }
         },
         query_userinfo:function () {
+            var that=this;
             $.ajax({
                 url:'/PetsCT/query_userinfo',
-                data:JSON.stringify({"head_img":topDatas.head_image}),
+                // data:JSON.stringify({"head_img":topDatas.head_image}),
                 dataType:'json',
                 type:'POST',
                 contentType: "application/json; charset=utf-8",
                 success:function (result) {
-                    //直接粘贴网址是没有登陆信息的
-                    if(result.data===null){
+                    if(!result.data){//直接粘贴网站无信息
                         location.href='/PetsCT';
-                    }/*else if(result.data.user_type===1){
-                        location.href='/PetsCT/home/admin.html';
-                    }else if(result.data.user_type===0){
-                        location.href='/PetsCT/home/userindex.html';
-                    }*/
-                    topDatas.userInfo=result.data;
-                    topDatas.head_image=topDatas.userInfo.head_img;//头像字段
-                    //判断head_img是否有数据，设置默认头像
-                    if(topDatas.head_image===null||topDatas.head_image===""){
-                        Vue.set(topDatas,"head_image","../../resource/images/user_head_test.jpg");
-                        //topDatas.head_image="../resource/images/user_head_test.jpg";
                     }
-
-                    console.log(result.data);
-                    console.log(topDatas.userInfo);
+                    topDatas.userInfo = result.data;
+                    topDatas.head_image = topDatas.userInfo.head_img;//头像字段
+                    //判断head_img是否有数据，设置默认头像
+                    if (topDatas.head_image === null || topDatas.head_image === "") {
+                        Vue.set(topDatas, "head_image", "../../resource/images/user_head_test.jpg");
+                    }
+                    that.is_admin();
                 },
                 error:function (result) {
                     location.href='/PetsCT';
                 }
             });
             },
+        /**
+         * 判断是否为管理员
+         * */
+        is_admin:function () {
+            var current_url=window.location.href;
+            if(current_url.indexOf("\/admin")!==-1&&topDatas.userInfo.user_type!==1){
+                location.href='/PetsCT/home/user/userindex.html'
+            }else{
+                topDatas.old_url=current_url;
+            }
+        },
         edit_password:function () {
             var that=this;
             swal({
                 html: '请输入新密码<input type="text" id="newpwd" class="swal2-input" placeholder="请输入新密码" value="">'+
                     '请确认新密码<input type="text" id="newpwd2" class="swal2-input" placeholder="请确认新密码" value="">',
-                //type: "info",
                 imageUrl:'../../resource/images/modify_password.gif',
                 cancelButtonText:"我再想想...",
                 showCancelButton: true,
@@ -190,11 +203,11 @@ Vue.component("top",{
                                         closeOnConfirm:false,
                                         showConfirmButton: false,
                                         allowOutsideClick: false,
-                                        allowEscapeKey: false
+                                        allowEscapeKey: false,
                                     });
                                     setTimeout(function () {
-                                        that.loginout();
-                                    },1500)
+                                        that.login_out();
+                                    },500)
                                 }
                             }
                         });
@@ -202,7 +215,6 @@ Vue.component("top",{
                         swal({
                             type:"error",
                             text:"密码不一致请重新输入",
-                            //imageUrl:"../resource/images/dog_load.gif",
                             closeOnConfirm:false,
                             showConfirmButton: true,
                             allowOutsideClick: false,
@@ -351,23 +363,45 @@ Vue.component("top",{
                 contentType: "application/json;charset=utf-8",
                 success:function (result) {
                     topDatas.treeInfo=result.data;
-                    for(var i=0;i<topDatas.treeInfo.length;i++){
-                        if(topDatas.treeInfo[i].pk_parent===0){
-                            topDatas.root_info.push(topDatas.treeInfo[i]);
-                        }
-                    }
-                    for(var j=0;j<topDatas.root_info.length;j++){
-                        topDatas.root_info[j].children=[];
-                        for(var k=0;k<topDatas.treeInfo.length;k++){
-                            if(topDatas.root_info[j].pk_resource===topDatas.treeInfo[k].pk_parent){
-                                topDatas.root_info[j].children.push(topDatas.treeInfo[k]);
-                            }
-                        }
-                    }
+                    that.initRoot(result.data);
+                    // for(var i=0;i<topDatas.treeInfo.length;i++){
+                    //     if(topDatas.treeInfo[i].pk_parent===0){
+                    //         topDatas.root_info.push(topDatas.treeInfo[i]);
+                    //     }
+                    // }
+                    // for(var j=0;j<topDatas.root_info.length;j++){
+                    //     topDatas.root_info[j].children=[];
+                    //     for(var k=0;k<topDatas.treeInfo.length;k++){
+                    //         if(topDatas.root_info[j].pk_resource===topDatas.treeInfo[k].pk_parent){
+                    //             topDatas.root_info[j].children.push(topDatas.treeInfo[k]);
+                    //         }
+                    //     }
+                    // }
                 }
             })
         },
-        switch_nav:function (resdata) {//设置当前点击的颜色
+        initRoot:function (resdata) {
+            var that=this;
+            resdata.forEach(function (item,index,resdata) {
+                if(item.pk_parent===0){
+                    topDatas.treeInfo_new.push(item);
+                    that.addChildren(resdata,item);
+                }
+            })
+        },
+        addChildren:function (resdata,childNode) {
+            var that=this;
+            resdata.forEach(function (item,index,resdata) {
+                if(item.pk_parent===childNode.pk_resource){
+                    if(!childNode.children){
+                        childNode.children=[];
+                    }
+                    childNode.children.push(item);
+                    that.addChildren(resdata,item);
+                }
+            })
+        },
+        switch_nav:function (resdata,index) {//设置当前点击的颜色
             topDatas.nav_node=resdata;
         },
         /**
@@ -420,10 +454,11 @@ Vue.component("top",{
         mounted:function () {
             this.query_userinfo();
             this.query_tree_nav();
-            this.update_lasttime();
-            setInterval(this.query_session,11*60*1000);
+            // this.update_lasttime();
+            setInterval(this.query_session,60*1000);
         }
 });
 var topVue=new Vue({
-    el:"#top_el"
+    el:"#top_el",
+    data:topDatas
 });

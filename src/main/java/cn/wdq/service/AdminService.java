@@ -16,12 +16,12 @@ public interface AdminService {
 	 * @param page 页数
 	 * @return 该状态下所有用户集合
 	 * */
-	List queryUsertype(String userType, int page) throws RuntimeException, SQLException;
+	List queryUserType(String userType, int page) throws RuntimeException, SQLException;
 	/**
 	 * 获取总页数
 	 * @return 总页数
 	 * */
-	int queryAllpage() throws SQLException;
+	int queryAllPage() throws SQLException;
 	/**
 	 * 模糊查询
 	 * @param user_name 用户名称
@@ -33,13 +33,13 @@ public interface AdminService {
 	 * @param user_name 用户名称
 	 * @return 是否删除成功的状态
 	 * */
-	boolean deleteCustomer(String user_name) throws RuntimeException, SQLException;
+	int deleteCustomer(String user_name) throws RuntimeException, SQLException;
 	/**
 	 * 踢人下线
 	 * @param user_name 用户名称
 	 * @return 是否删除成功的状态
 	 * */
-	boolean kicking(String user_name) throws RuntimeException;
+	int kicking(String user_name) throws RuntimeException;
 
 	/**
 	 * 树形菜单保存

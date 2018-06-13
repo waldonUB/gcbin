@@ -1,7 +1,5 @@
 package cn.wdq.entities;
 
-import com.alibaba.fastjson.JSONObject;
-
 import java.io.Serializable;
 
 /**

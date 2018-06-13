@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
         <!-- 自动扫描包，实现支持注解的IOC -->
-        <context:component-scan base-package="cn.wdq"></context:component-scan>
+        <context:component-scan base-package="cn.wdq"/>
         <!-- spring MVC不处理静态资源，交给默认的servlet来处理 -->
         <mvc:default-servlet-handler/>
         <!-- 支持mvc注解驱动 -->
@@ -23,51 +23,6 @@
 		        </bean>  
 		    </mvc:message-converters>
         </mvc:annotation-driven>
-        
-        <!-- 视图解析器 -->
-        <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
-	        <property name="order" value="1"></property>
-	        <property name="prefix" value="/"></property>
-	        <property name="suffix" value=".jsp"></property>
-        </bean>
-        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
-	        <property name="order" value="2"></property>
-	        <property name="prefix" value="/"></property>
-	        <property name="suffix" value=".html"></property>
-        </bean> -->
-        <!-- jsp视图 -->
-    <!-- <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/"/>
-        <property name="suffix" value=".jsp"/>
-        <property name="order" value="1"></property>
-    </bean> -->
-    
-    <!-- 配置freeMarker的模板路径 -->
-    <!-- <bean  class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/"/>
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="freemarkerSettings">
-            <props>
-                <prop key="template_update_delay">3600</prop>
-                <prop key="locale">zh_CN</prop>
-                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-                <prop key="date_format">yyyy-MM-dd</prop>
-                <prop key="number_format">#.##</prop>
-            </props>
-        </property>
-    </bean> -->
-   <!-- 配置freeMarker视图解析器（可解析HTML） -->
-    <!-- <bean  class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
-        <property name="contentType" value="text/html; charset=UTF-8"/>
-        <property name="exposeRequestAttributes" value="true" />
-        <property name="exposeSessionAttributes" value="true" />
-        <property name="exposeSpringMacroHelpers" value="true" />
-        <property name="cache" value="true" />
-        <property name="suffix" value=".html" />
-        <property name="order" value="0"/>
-    </bean> -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass"
@@ -124,7 +79,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/><!--指定数据源-->
         <property name="typeAliasesPackage" value="cn.wdq.entities"/>
-        <property name="mapperLocations" value="classpath:*Mapper.xml"/><!--这里可以用占位符*-->
+        <property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"/><!--这里可以用占位符*-->
     </bean>
     <!--创建一个sqlSession对象-->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -132,6 +87,9 @@
     </bean>
     <!--创建一个DAO的Impl对象-->
     <bean id="uIDImpl" class="cn.wdq.dao.UIDImpl">
+        <property name="sqlSession" ref="sqlSession"></property>
+    </bean>
+    <bean id="adminDAOImpl" class="cn.wdq.dao.AdminDAOImpl">
         <property name="sqlSession" ref="sqlSession"></property>
     </bean>
     <bean id="resDAOImpl" class="cn.wdq.dao.ResDAOImpl">
@@ -143,6 +101,9 @@
     <bean id="blogInfoDAOImpl" class="cn.wdq.dao.BlogInfoDAOImpl">
         <property name="sqlSession" ref="sqlSession"></property>
     </bean>
+    <bean id="commonDAOImpl" class="cn.wdq.dao.CommonDAOImpl">
+        <property name="sqlSession" ref="sqlSession"></property>
+    </bean>
     <!--自动扫描映射接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定sql会话工厂，在上面配置过的-->
@@ -150,29 +111,21 @@
         <!--指定基础包，即自动扫描cn.wdq.mapping这个包以及他的子包下所有的映射接口类-->
         <property name="basePackage" value="cn.wdq.mapping"></property>
     </bean>
-    <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
-	        <property name="order" value="2"></property>
-	        <property name="prefix" value="/"></property>
-	        <property name="suffix" value=".html"></property>
-    </bean> -->
-    <!-- 拦截器 -->  
+    <!-- 拦截器 -->
         <mvc:interceptors>  
-            <!-- 多个拦截器，顺序执行 -->  
-            <mvc:interceptor>  
-                <mvc:mapping path="/home/**"/>  
-                <bean class="cn.wdq.interceptor.LoginInterceptor">
-               		 <!-- <property name="excludeUrls">
-	                     <list>
-	                         <value>/login</value>
-	                         <value>/</value>
-	                     </list>
-	                 </property> -->
-                </bean>  
+            <!-- 多个拦截器，顺序执行 -->
+            <mvc:interceptor>
+                <mvc:mapping path="home/**"/>
+                <bean class="cn.wdq.common.interceptor.LoginInterceptor">
+                </bean>
             </mvc:interceptor>
             <!--判断是否为管理员的拦截器-->
             <mvc:interceptor>
-                <mvc:mapping path="/home/admin/**"/>
-                <bean class="cn.wdq.interceptor.IsAdminInterceptor">
+                <mvc:mapping path="/**/*.html"/>
+                <mvc:exclude-mapping path="/login.html"/>
+                <mvc:exclude-mapping path="/login_error.html"/>
+                <mvc:exclude-mapping path="/home/user/**" />
+                <bean class="cn.wdq.common.interceptor.IsAdminInterceptor">
                 </bean>
             </mvc:interceptor>
         </mvc:interceptors>

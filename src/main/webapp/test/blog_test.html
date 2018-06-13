@@ -19,6 +19,12 @@
 <div class="wrapper" id="blog_el">
     <top></top>
     <div class="container">
+        <p><content_template v-model="content_data" @click="show_model">
+            <ul>
+                <li v-for="(item,index) in children" v-model="item">{{item}}</li>
+            </ul>
+        </content_template></p>
+
         <div class="panel col-lg-8 col-md-8" style="margin:0 0 5px 30px">
             <div class="panel-body">
                 <p style="color: #8590A6">内容分类,来自:Java
@@ -32,7 +38,9 @@
                 </p>
                 <h4 style="font-weight: 700">测试标题123456ssswww</h4>
                 <p style="cursor: pointer;color: #77839C">1,566人赞同了该回答</p>
-                <p><content_template></content_template></p>
+                <p><content_template >
+
+                </content_template></p>
                 <p><a style="color: #77839C;font-size: 15px" href="javascript:void(0)">编辑于2018-02-24</a></p>
                 <p style="color: #77839C">
                     <button class="btn btn-sm" style="background-color: #D9EDFF"><i class="fa fa-caret-up" style="color: #0084FF">&nbsp;&nbsp;1187</i></button>
@@ -85,10 +93,43 @@
 <script src="../resource/js/vue.min.js"></script>
 <script>
     var content_data={
-        head_img:'<div style="font-size: 15px">网易MuMu(安卓模拟器),是网易官方推出的精品游戏服务平台,安装后可在电脑上运行各类游戏与应用,具备全面兼容、操作流畅、智能辅助等特点,每天还会为您推荐火热的应用.</div>'
+        head_img:'<div style="font-size: 15px">网易MuMu(安卓模拟器),是网易官方推出的精品游戏服务平台</div>',
+        children: [
+            { name: 'hello' },
+            { name: 'wat' },
+            {
+                name: 'child folder',
+                children: [
+                    {
+                        name: 'child folder',
+                        children: [
+                            { name: 'hello' },
+                            { name: 'wat' }
+                        ]
+                    },
+                    { name: 'hello' },
+                    { name: 'wat' },
+                    {
+                        name: 'child folder',
+                        children: [
+                            { name: 'hello' },
+                            { name: 'wat' }
+                        ]
+                    }
+                ]
+            }
+        ]
     };
     Vue.component('content_template',{
-        template:content_data.head_img
+        template:content_data.head_img,
+        props:{
+            model:Object
+        },
+        methods:{
+            show_model:function () {
+                console.log(this.model)
+            }
+        }
     });
     var content_el=new Vue({
         el:"#blog_el",

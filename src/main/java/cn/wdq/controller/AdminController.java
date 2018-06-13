@@ -24,8 +24,7 @@ import java.util.List;
 public class AdminController {
     private Logger logger = Logger.getLogger(AdminController.class);
     @Autowired
-    private AdminService admin;
-
+    AdminService admin;
     /**
      * 获取不同用户的状态列表
      * @param json include:1.userType 不同状态的用户
@@ -33,12 +32,12 @@ public class AdminController {
      */
     @RequestMapping("/query_usertype")
     @ResponseBody
-    public ReturnModel queryUsertype(@RequestBody JSONObject json) throws SQLException {
+    public ReturnModel queryUserType(@RequestBody JSONObject json) throws SQLException {
         ReturnModel model = new ReturnModel();
         String userType = json.getString("user_type");
         int page = json.getIntValue("page");
-        List list = admin.queryUsertype(userType, page);
-        int pages = admin.queryAllpage();
+        List list = admin.queryUserType(userType, page);
+        int pages = admin.queryAllPage();
         if (!list.isEmpty()) {
             model.setSuccess(true);
             model.setMessage("查询成功");
@@ -90,8 +89,8 @@ public class AdminController {
     public ReturnModel deleteUser(@RequestBody JSONObject json) throws SQLException {
         ReturnModel model = new ReturnModel();
         String user_name = json.getString("user_name").trim();
-        boolean is_delete = admin.deleteCustomer(user_name);
-        if (is_delete) {
+        int is_delete = admin.deleteCustomer(user_name);
+        if (is_delete>0) {
             model.setSuccess(true);
             model.setMessage("删除成功");
         } else {
@@ -111,8 +110,8 @@ public class AdminController {
     @ResponseBody
     public ReturnModel kickUser(@RequestParam("user_name") String user_name) {
         ReturnModel model = new ReturnModel();
-        boolean is_kick = admin.kicking(user_name);
-        if (is_kick) {
+        int is_kick = admin.kicking(user_name);
+        if (is_kick>0) {
             model.setSuccess(true);
             model.setMessage("删除成功");
         } else {

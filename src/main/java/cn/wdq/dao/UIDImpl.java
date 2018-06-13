@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+
 public class UIDImpl implements UserInfoDAO{
     private SqlSession sqlSession;
 
@@ -23,9 +24,9 @@ public class UIDImpl implements UserInfoDAO{
     }
 
     @Override
-    public List<UserInfo> hasSame(JSONObject json) {
+    public int haveSame(JSONObject json) {
         String user_name=json.getString("user_name");
-        return sqlSession.selectList("cn.wdq.mapping.UserInfoDAO.hasSame",user_name);
+        return sqlSession.selectOne("cn.wdq.mapping.UserInfoDAO.hasSame",user_name);
     }
 
     @Override
@@ -40,20 +41,43 @@ public class UIDImpl implements UserInfoDAO{
         userInfo.setDistrict(json.getString("district"));
         return sqlSession.insert("cn.wdq.mapping.UserInfoDAO.register",userInfo);
     }
-
+    @Override
+    public int forceLogout(String user_name){
+        return sqlSession.delete("cn.wdq.mapping.UserInfoDAO.forceLogout",user_name);
+    }
+    @Override
+    public String checkOnline(String user_name){
+        return sqlSession.selectOne("cn.wdq.mapping.UserInfoDAO.checkOnline",user_name);
+    }
+    @Override
+    public int autoLogout(String user_name){
+        return sqlSession.delete("cn.wdq.mapping.UserInfoDAO.autoLogout",user_name);
+    }
+    @Override
+    public int insertLoginInfo(UserInfo userInfo){
+        return sqlSession.insert("cn.wdq.mapping.UserInfoDAO.insertLoginInfo",userInfo);
+    }
+    @Override
+    public int editPassword(UserInfo userInfo){
+        return sqlSession.update("cn.wdq.mapping.UserInfoDAO.editPassword",userInfo);
+    }
+    @Override
+    public int setHeadImg(UserInfo userInfo){
+        return sqlSession.update("cn.wdq.mapping.UserInfoDAO.setHeadImg",userInfo);
+    }
     @Override
     public int kicking(String user_name) {
         return sqlSession.delete("cn.wdq.mapping.UserInfoDAO.kicking",user_name);
     }
 
     @Override
-    public int updateLasttime(String user_name) {
+    public int updateLastTime(String user_name) {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String last_time=simpleDateFormat.format(new Date());
         UserInfo userInfo=new UserInfo();
         userInfo.setUser_name(user_name);
         userInfo.setLast_time(last_time);
-        return sqlSession.update("cn.wdq.mapping.UserInfoDAO.updateLasttime",userInfo);
+        return sqlSession.update("cn.wdq.mapping.UserInfoDAO.updateLastTime",userInfo);
     }
 
     @Override

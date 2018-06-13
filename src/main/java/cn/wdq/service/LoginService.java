@@ -1,57 +1,65 @@
 package cn.wdq.service;
 
-import cn.wdq.entities.ReturnModel;
 import cn.wdq.entities.UserInfo;
 import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * 用户登录相关操作
+ * @author waldon
+ * */
 public interface LoginService {
 	/**
 	 * 登录验证
+	 * @param userInfo 用户信息 include:1.cuserid 用户主键 2.user_name 用户名
+	 * @return 该用户的信息
 	 * */
 	List<UserInfo> login(UserInfo userInfo);
 	/**
 	 * 检查是否有同名用户
+	 * @param json 用户信息 include:1.cuserid 用户主键 2.user_name 用户名
+	 * @return 该用户名是否存在的状态 1 存在 0 不存在
 	 * */
-	boolean has_same(JSONObject json);
+	int haveSame(JSONObject json);
 	/**
 	 * 注册新用户
+	 * @param json 用户信息 include:1.cuserid 用户主键 2.user_name 用户名
+	 * @return 注册是否成功的状态 1 成功 0失败
 	 * */
 	int register(JSONObject json);
 	/**
 	 * 强制注销用户
+	 * @param user_name 用户名
 	 * */
-	void forceLogout(HttpServletRequest request, HttpServletResponse response, String user_name) throws SQLException;
+	void forceLogout(HttpServletRequest request, String user_name) throws SQLException;
 	/**
 	 * 主动注销用户
+	 * @param user_name 用户名
 	 * */
 	void autoLogout(String user_name) throws SQLException;
 	/**
 	 * 插入一个唯一的cuserid
+	 * @param userInfo 用户信息 include:1.cuserid 用户主键 2.user_name 用户名
 	 * */
-	void insertLoginInfo(HttpServletRequest request, HttpServletResponse response, String user_name) throws SQLException;
-	/**
-	 * 根据cuserid删除，或者把is_online=0的删除
-	 * */
-	void deleteLoginInfo(HttpServletRequest request, HttpServletResponse response, String name, int is_online) throws SQLException;
-	/**
-	 * 返回被强制下线信息
-	 * */
-	ReturnModel notLogin();
+	void insertLoginInfo(UserInfo userInfo,HttpServletRequest request) throws SQLException;
 	/**
 	 * 修改密码
+	 * @param user_name 用户名
+	 * @param password 用户密码
 	 * */
 	void editPassword(String user_name, String password) throws SQLException;
 	/**
 	 * 上传头像以base64码的数据保存到数据库
+	 * @param img_base64 base64格式的头像数据
+	 * @param user_name 用户名
 	 * */
 	void setHeadImg(String img_base64, String user_name) throws SQLException;
 	/**
 	 * 更新最近登录时间
+	 * @param user_name 用户名
 	 * */
-	void updateLasttime(String user_name);
+	void updateLastTime(String user_name);
 }

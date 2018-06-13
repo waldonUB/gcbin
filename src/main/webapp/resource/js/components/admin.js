@@ -171,7 +171,7 @@ var adminVue=new Vue({
                 showConfirmButton: false,
                 allowOutsideClick: false,
                 allowEscapeKey: false
-            }).catch(swal.noop());
+            }).catch(swal.noop);
             $.ajax({
                 url:'/PetsCT/query_usertype',
                 data:JSON.stringify({"user_type":resdata,"page":0}),
@@ -188,7 +188,7 @@ var adminVue=new Vue({
                         }
                         userData.page_show=true;
                         that.init();//初始化分页
-                        swal.close()},500);
+                        swal.close()},300);
                 }
             });
         },
@@ -250,7 +250,7 @@ var adminVue=new Vue({
                             swal({
                                 text:"用户："+resdata.user_name+"，已删除",
                                 type:"success",
-                                timer:2000
+                                timer:500
                             }).catch(swal.noop);
                         }
                     });
@@ -287,19 +287,10 @@ var adminVue=new Vue({
                     swal({
                         text:resdata.user_name+",已下线",
                         type:"success",
-                        timer:2000
+                        timer:500
                     }).catch(swal.noop);
                 }
             });
-        },
-        /**
-         * 判断是否为管理员
-         * */
-        is_admin:function () {
-            this.$refs.ref_top.query_userinfo();
-            if(topDatas.userInfo.user_type===0){
-                location.href='/PetsCT/home/user/userindex.html';
-            }
         },
 
 
@@ -382,13 +373,13 @@ var adminVue=new Vue({
                         swal({
                             text:"保存成功",
                             type:"success",
-                            timer:2000
+                            timer:500
                         }).catch(swal.noop);
                     }else{
                         swal({
                             text:"保存失败"+result.message,
                             type:"error",
-                            timer:2000
+                            timer:500
                         }).catch(swal.noop);
                     }
                     that.init_tree();
@@ -555,7 +546,6 @@ var adminVue=new Vue({
     },
     mounted:function () {
         //this.$refs.ref_top.query_userinfo();//可以通过组件查询
-        this.is_admin();//为了防止spring拦截器不生效
         this.query_tree();
         this.query_usertype('all');
     }

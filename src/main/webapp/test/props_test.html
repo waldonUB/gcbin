@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="../resource/images/favicon.ico">
+    <link rel="stylesheet" href="../resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resource/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../resource/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../resource/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../resource/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="../resource/css/pagination.css">
+    <link rel="stylesheet" href="../resource/css/zTreeStyle/zTreeStyle.css">
+    <script src="../resource/js/vue.min.js"></script>
+</head>
+<body>
+<div id="test_el">
+        <comp-item :model="model"></comp-item>
+</div>
+
+<script>
+    var template_test='<div>数字：{{model}}' +
+        '<div v-if="model.children.length>0">' +
+        '<p>show</p>' +
+        '<comp-item v-for="model,index in model.children" :model="model"></comp-item>' +
+        '</div>' +
+        '' +
+        '</div>';
+    var dataModel={
+        what:3,
+        children: [
+            { name: 'hello' },
+            { name: 'wat' },
+            {
+                name: 'child folder',
+                children: [
+                    {
+                        name: 'child folder',
+                        children: [
+                            { name: 'hello' },
+                            { name: 'wat' }
+                        ]
+                    },
+                    { name: 'hello' },
+                    { name: 'wat' },
+                    {
+                        name: 'child folder',
+                        children: [
+                            { name: 'hello' },
+                            { name: 'wat' },
+                            {children: [
+                                { name: 'hello' },
+                                { name: 'wat' }
+                            ]}
+                        ]
+                    }
+                ]
+            }
+        ]
+
+    };
+    Vue.component('comp-item',{
+        template:template_test,
+        props:{
+            model:dataModel
+        },
+        data:function () {
+            return{
+//                what:2
+            }
+        }
+    });
+    var testVue=new Vue({
+        el:'#test_el',
+        data:dataModel
+    });
+</script>
+<script src="../resource/js/jquery.js"></script>
+<script src="../resource/js/bootstrap.min.js"></script>
+<script src="../resource/js/sweetalert2.js"></script>
+</body>
+</html>

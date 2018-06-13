@@ -14,7 +14,44 @@ html {
         right:28px;
     }
 }
+.tree{
 
+}
+.tree li{
+    position:relative;
+}
+.tree ul{
+    width: 159px;
+    position: absolute;
+    background-color: #FFFFFF;
+    padding-left: 0;
+    border: 1px solid #eeeeee;
+    border-radius: 0 5px 5px 0;
+}
+.tree ul li{
+    width: 159px;
+    position:relative;
+    list-style: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+.tree ul li a{
+    color: #777;
+    padding:0 20px 0 20px;
+    width: 100%;
+}
+.tree li>ul{
+    left: 158px;
+    top:0;
+    display: none;
+}
+.tree li:hover{
+    background-color: #E1E3E9;
+}
+.tree li:hover>ul{
+    display: block;
+}
 .footer {
   position: absolute;
   bottom: 0;

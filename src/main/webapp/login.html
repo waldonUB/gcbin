@@ -21,9 +21,9 @@
   <div class="content" id="login_config">
       <div class="header">
           <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
-          <h1 style="color: #2BB8AA;font-family: '华文楷体';font-weight:bolder;margin: 0 0 0 0">宠物社区</h1>
+          <h1 style="color: #2BB8AA;font-family: '华文楷体';font-weight:bolder;margin: 0 0 0 0">GC&Bin</h1>
           <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div>
-          <p style="color: #2BB8AA;font-family: '华文楷体';font-weight:bolder;margin-bottom: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;community</p>
+          <p style="color: #2BB8AA;font-family: '华文楷体';font-weight:bolder;margin-bottom: 0">&nbsp;</p>
       </div>
       <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
@@ -34,13 +34,13 @@
                   <div class="bs-example bs-example-form" style="padding-top:25%">
                       <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-8 input-group" >
                           <div class="input-group">
-                              <span class="input-group-addon " style="border-radius: 10px 0 0 10px"><i class="fa fa-users"></i></span>
+                              <span class="input-group-addon " style="border-radius: 10px 0 0 10px"><i class="fa fa-fw fa-users"></i></span>
                               <input v-model="currentInfo.user_name" class="col-xs-10 col-sm-6 col-md-6 col-lg-8  form-control" style="border-radius:0 10px 10px 0" type="text" name="user_name" placeholder="用户名...">
                           </div>
                       </div>
                       <div class="col col-xs-12 col-sm-12 col-md-4 col-lg-8 input-group" style="padding-top: 10px;">
                           <div class="input-group" >
-                              <span class="input-group-addon" style="border-radius: 10px 0 0 10px"><i class="fa fa-key"></i></span>
+                              <span class="input-group-addon" style="border-radius: 10px 0 0 10px"><i class="fa fa-fw fa-key"></i></span>
                               <input v-model="currentInfo.password" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-control" style="border-radius:0 10px 10px 0" type="password" name="password" placeholder="密码...">
                           </div>
                       </div>
@@ -61,17 +61,10 @@
                           </p>
                       </div>
                   </div>
-          <!--<div class="bs-example bs-example-form">
-              <input type="text" v-model="currentInfo.user_name">
-              <input type="text" v-model="currentInfo.password">
-              <button @click="querylogin()">试试</button>
-          </div>-->
-
       </div>
       </div>
       <div class="col-lg-8 col-md-8 main-footer" style="margin-top: 80px">
           <p style="color: #999">Copyright © 1995-2018 Waldon. All Rights Reserved.<i class="fa fa-envira" ></i></p>
-
       </div>
       <div class="modal fade" id="register_modal" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
@@ -118,7 +111,6 @@
   <script src="resource/js/bootstrap.min.js"></script>
   <script src="resource/js/sweetalert2.js"></script>
   <script src="resource/js/core.js"></script>
-  <!--<script src="resource/js/promise.js"></script>-->
   <script>
       $(window).keydown(function (event) {
           if(event.which===13){
@@ -374,21 +366,13 @@
                                       showConfirmButton: true,
                                       allowOutsideClick: false,
                                       allowEscapeKey: false
-                                  }).catch(swal.noop());
-                              }else{
-                                  swal({
-                                      title:"登陆中",
-                                      imageUrl:"./resource/images/dog_load.gif",
-                                      showConfirmButton: false,
-                                      allowOutsideClick: false,
-                                      allowEscapeKey: false
-                                  }).catch(swal.noop());
-                                  setTimeout(function (){
-                                  if(result.data.user_type===1){
-                                      location.href='/PetsCT/home/admin/admin.html';
-                                  }else{
-                                      location.href='/PetsCT/home/user/userindex.html';
-                                  }},2000);
+                                  }).catch(swal.noop);
+                              }else {
+                                  if (result.data.user_type === 1) {
+                                      location.href = '/PetsCT/home/admin/admin.html';
+                                  } else {
+                                      location.href = '/PetsCT/home/user/userindex.html';
+                                  }
                               }
                           }else{
                               swal({
@@ -398,7 +382,7 @@
                                   showConfirmButton: true,
                                   allowOutsideClick: false,
                                   allowEscapeKey: true
-                              }).catch(swal.noop());
+                              }).catch(swal.noop);
                           }
                       }
                   });
@@ -419,7 +403,7 @@
                           showConfirmButton: true,
                           allowOutsideClick: false,
                           allowEscapeKey: false,
-                          timer:2000
+                          timer:500
                       });
                       return;
                   }
@@ -430,7 +414,7 @@
                           showConfirmButton: true,
                           allowOutsideClick: false,
                           allowEscapeKey: false,
-                          timer:2000
+                          timer:500
                       });
                       return;
                   }
@@ -449,7 +433,7 @@
                           showConfirmButton: true,
                           allowOutsideClick: false,
                           allowEscapeKey: false,
-                          timer:2000
+                          timer:500
                       });
                       return;
                   }
@@ -478,7 +462,7 @@
                               });
                               setTimeout(function () {
                                   that.querylogin();
-                              },2000);
+                              },500);
                           }else{
                               swal({
                                   type:"error",
@@ -496,7 +480,7 @@
                * 选择框里面的数据
                * */
               search_selected:function (resdata) {
-                  //console.log(resdata.srcElement.text)//这个是里面的value值，F12看到的...
+                  //console.log(resdata.srcElement.text)//里面的value值
                   Vue.set(loginDatas,'search_text',resdata);
                   Vue.set(loginDatas,'is_selected','Y');//执行顺序：1
                   Vue.set(loginDatas,'new_data',[]);//打字内容跟选择内容一样时，将不会执行watch里面的function

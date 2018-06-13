@@ -10,23 +10,23 @@ import java.util.HashMap;
 
 public class ReturnModel implements Serializable {
 	/**接口业务是否处理成功*/
-	boolean success = false;
+	private boolean success = false;
 	/** 是否需要重定向到登录界面*/
-	boolean redirectLogin = false;
+	private boolean redirectLogin = false;
 	/**返回状态*/
-	int status=0;
+	private int status=0;
 	/**返回消息*/
-	String message;
+	private String message;
 	/**单据号*/
-	String billno;
+	private String billno;
 	/**单据主键*/
-	String pk_bill;
+	private String pk_bill;
 	/**单据类型*/
-	String vbilltype;
+	private String vbilltype;
 	/**返回数据*/
-	Object data;
+	private Object data;
 	/**返回多个数据*/
-	HashMap<String, Object> props = new HashMap<String, Object>();
+	private HashMap<String, Object> props = new HashMap<String, Object>();
 
 	public boolean isSuccess() {
 		return success;

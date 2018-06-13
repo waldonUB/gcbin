@@ -22,7 +22,7 @@ public class BlogInfoDAOImpl implements BlogInfoDAO {
     @Override
     public int save_question(JSONObject json) {
         BlogInfo blogInfo=new BlogInfo();
-        //blogInfo.setPk_blog(1);自增不用放主键
+        //blogInfo.setPk_blog(1);主键已自增
         blogInfo.setCuserid(json.getString("cuserid"));
         blogInfo.setUser_name(json.getString("user_name"));
         blogInfo.setHead_img(json.getString("head_img"));

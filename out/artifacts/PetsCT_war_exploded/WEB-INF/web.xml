@@ -41,12 +41,12 @@
     <!-- 登陆过滤器 -->
     <filter>
         <filter-name>LoginFilter</filter-name>
-        <filter-class>cn.wdq.filter.LoginFilter</filter-class>
+        <filter-class>cn.wdq.common.filter.LoginFilter</filter-class>
     </filter>
 
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
-        <url-pattern>/home/*</url-pattern>
+        <url-pattern>/home/admin/*</url-pattern>
     </filter-mapping>
     <!-- session会话失效时间 -->
     <session-config>
@@ -98,6 +98,6 @@
     </listener>-->
     <!-- session会话监听 -->
     <listener>
-        <listener-class>cn.wdq.listener.SessionListener</listener-class>
+        <listener-class>cn.wdq.common.listener.SessionListener</listener-class>
     </listener>
 </web-app>

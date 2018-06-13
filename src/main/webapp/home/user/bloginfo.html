@@ -292,7 +292,7 @@
                             swal({
                                 text: "发布成功",
                                 type: "success",
-                                timer: 3000
+                                timer: 1000
                             });
                         }
 
@@ -318,6 +318,13 @@
                 });
             },
             query_comment: function (pk_blog, index) {
+                swal({
+                    //text:"加载中...",
+                    imageUrl: "../../resource/images/preloader.gif",
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                });
                 content_data.comment_info = [];//先返回
                 content_data.current_index = index;
                 $.ajax({
@@ -327,14 +334,6 @@
                     dataType: 'json',
                     contentType: 'application/json;charset=utf-8',//不指定为json时，默认为String类型
                     success: function (result) {
-                        swal({
-                            //text:"加载中...",
-                            imageUrl: "../../resource/images/preloader.gif",
-                            showConfirmButton: false,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            timer: 1000
-                        });
                         content_data.comment_info = result.data;
                         Vue.set(content_data.blog_info[index], 'comment_num', content_data.comment_info.length);//以评论区的数量为真实数量
                         for (var i = 0; i < content_data.comment_info.length; i++) {
@@ -343,6 +342,10 @@
                                 //topDatas.head_image="../resource/images/user_head_test.jpg";
                             }
                         }
+                        setTimeout(function () {
+                            swal.close();
+                        },300);
+
                     }
                 });
             },

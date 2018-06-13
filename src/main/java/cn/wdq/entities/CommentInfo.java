@@ -8,19 +8,19 @@ import java.io.Serializable;
  * */
 public class CommentInfo implements Serializable{
     /**评论主键*/
-    int pk_comment;
+    private int pk_comment;
     /**话题主键*/
-    int pk_blog;
+    private int pk_blog;
     /**评论内容*/
-    String cm_content;
+    private String cm_content;
     /**评论点赞*/
-    String cm_praise;
+    private String cm_praise;
     /**评论时间*/
-    String cm_time;
+    private String cm_time;
     /**评论用户*/
-    String user_name;
+    private String user_name;
     /**评论用户头像*/
-    String head_img;
+    private String head_img;
 
     public int getPk_comment() {
         return pk_comment;
