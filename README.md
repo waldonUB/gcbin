@@ -17,13 +17,11 @@
 
 ###效果：
 图表和地图<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/datascreen.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/index.gif)
 导航栏节点注册<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/resource.gif)
-头像上传<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/individuation.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/tree.gif)
 话题交流<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/classify.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/community.gif)
 Druid连接池监控<br>
 ![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/druid.gif)
 
