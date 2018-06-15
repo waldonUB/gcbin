@@ -548,6 +548,7 @@ var adminVue=new Vue({
         //this.$refs.ref_top.query_userinfo();//可以通过组件查询
         this.query_tree();
         this.query_usertype('all');
+        this.$refs.ref_top.switch_nav("0");
     }
 });
 /*--------------树形菜单的js方法--------------*/

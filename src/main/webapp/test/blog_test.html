@@ -19,11 +19,12 @@
 <div class="wrapper" id="blog_el">
     <top></top>
     <div class="container">
-        <p><content_template v-model="content_data" @click="show_model">
-            <ul>
-                <li v-for="(item,index) in children" v-model="item">{{item}}</li>
-            </ul>
-        </content_template></p>
+
+        <form class="form-inline">
+            <div class="form-group-sm">
+                <input type="text" class="form-control">
+            </div>
+        </form>
 
         <div class="panel col-lg-8 col-md-8" style="margin:0 0 5px 30px">
             <div class="panel-body">
@@ -38,9 +39,6 @@
                 </p>
                 <h4 style="font-weight: 700">测试标题123456ssswww</h4>
                 <p style="cursor: pointer;color: #77839C">1,566人赞同了该回答</p>
-                <p><content_template >
-
-                </content_template></p>
                 <p><a style="color: #77839C;font-size: 15px" href="javascript:void(0)">编辑于2018-02-24</a></p>
                 <p style="color: #77839C">
                     <button class="btn btn-sm" style="background-color: #D9EDFF"><i class="fa fa-caret-up" style="color: #0084FF">&nbsp;&nbsp;1187</i></button>
@@ -84,6 +82,11 @@
                 <p style="color: #77839C;padding-top: 10px"><i class="fa fa-edit">&nbsp;&nbsp;&nbsp;公共编辑动态</i></p>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-12">
+            <i class="fa fa-fw fa-vimeo col-lg-2" style="font-size: 50px;color: #D20A0A"></i>
+            <h2 style="font-weight: bolder">waldon</h2>
+
         </div>
     </div>
 </div>

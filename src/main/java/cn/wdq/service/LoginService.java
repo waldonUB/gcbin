@@ -62,4 +62,15 @@ public interface LoginService {
 	 * @param user_name 用户名
 	 * */
 	void updateLastTime(String user_name);
+	/**
+	 * 增加登录历史用户
+	 * @param userInfo 登录用户信息
+	 * @return 增加是否成功的状态 1 成功 0失败
+	 * */
+	int addLoginHistory(UserInfo userInfo);
+	/**
+	 * 增加登录历史用户
+	 * @return 登录历史表所有用户的信息
+	 * */
+	List<UserInfo> queryLogHis();
 }

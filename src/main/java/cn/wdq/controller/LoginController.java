@@ -1,5 +1,6 @@
 package cn.wdq.controller;
 
+import cn.wdq.common.util.GetIpArea;
 import cn.wdq.entities.ReturnModel;
 import cn.wdq.entities.UserInfo;
 import cn.wdq.mapping.CommonDAO;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,8 +43,9 @@ public class LoginController {
      */
     @RequestMapping("/login_validate")
     @ResponseBody
-    public ReturnModel loginValidate(@RequestBody UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    public ReturnModel loginValidate(@RequestBody UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         ReturnModel model = new ReturnModel();
+        GetIpArea getIpArea=new GetIpArea();
         String user_name = userInfo.getUser_name();
         String password = userInfo.getPassword();
         if (user_name == null || password == null || user_name.trim().length() < 1 || password.trim().length() < 1) {
@@ -62,12 +67,22 @@ public class LoginController {
                 ip = request.getRemoteAddr();
             }
             JSONObject json_info = (JSONObject) JSON.toJSON(list.get(0));//历史脏数据存在多个用户同名的情况
-            userInfo.setHead_img(json_info.getString("head_img"));
+            String ipArea=getIpArea.getIpArea(ip);
             json_info.put("ip", ip);
             json_info.put("is_online", 1);
+            json_info.put("ip_area",ipArea);
+            userInfo.setHead_img(json_info.getString("head_img"));
+            userInfo.setIs_online(1);
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String last_time=simpleDateFormat.format(new Date());
+            userInfo.setLast_time(last_time);
+            userInfo.setDistrict(json_info.getString("district"));
+            userInfo.setIp(ip);
+            userInfo.setIp_area(ipArea);
             request.getSession().setAttribute("sessionKey", json_info.toString());//把值放到session里面
             loginService.forceLogout(request, user_name);//强制挤下用户
             loginService.insertLoginInfo(userInfo,request);//把在线用户数据插入login_info表
+            loginService.addLoginHistory(userInfo);//把登录用户插入用户登录历史表
             loginService.updateLastTime(user_name);//更新最近登录时间
             model.setData(json_info);
             model.setSuccess(true);
@@ -208,6 +223,15 @@ public class LoginController {
                 model.setMessage("账号在其他处登录");
             }
         }
+        return model;
+    }
+    @RequestMapping("/query_history")
+    @ResponseBody
+    public ReturnModel queryHistory(){
+        ReturnModel model=new ReturnModel();
+        List<UserInfo> list=loginService.queryLogHis();
+        model.setSuccess(true);
+        model.setData(list);
         return model;
     }
 }

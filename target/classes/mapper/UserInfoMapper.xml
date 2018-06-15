@@ -25,8 +25,8 @@
         delete from login_info where user_name=#{user_name} and is_online=1
     </delete>
     <insert id="insertLoginInfo" parameterType="cn.wdq.entities.UserInfo">
-        insert into login_info(cuserid,user_name,password,dr,user_type,is_lock,is_online,head_img,last_time)
-        values (#{cuserid},#{user_name},#{password},#{dr},#{user_type},#{is_lock},#{is_online},#{head_img},#{last_time})
+        insert into login_info(cuserid,user_name,password,dr,user_type,is_lock,is_online,head_img,last_time,ip,district,ip_area)
+        values (#{cuserid},#{user_name},#{password},#{dr},#{user_type},#{is_lock},#{is_online},#{head_img},#{last_time},#{ip},#{district},#{ip_area})
     </insert>
     <update id="editPassword" parameterType="cn.wdq.entities.UserInfo">
         update sm_user set password=#{password} where user_name=#{user_name}
@@ -45,4 +45,13 @@
     <delete id="clearAll">
         delete from login_info
     </delete>
+    <!--增加用户登录历史-->
+    <insert id="addLoginHistory" parameterType="cn.wdq.entities.UserInfo">
+        INSERT INTO login_history(cuserid,user_name,password,dr,user_type,is_lock,is_online,head_img,last_time,ip,district,ip_area)
+        VALUES (#{cuserid},#{user_name},#{password},#{dr},#{user_type},#{is_lock},#{is_online},#{head_img},#{last_time},#{ip},#{district},#{ip_area})
+    </insert>
+    <!--查询用户登录历史-->
+    <select id="queryLogHis" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT * FROM login_history ORDER BY last_time DESC
+    </select>
 </mapper>

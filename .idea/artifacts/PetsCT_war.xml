@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="PetsCT:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/PetsCT</output-path>
-    <root id="archive" name="PetsCT.war">
-      <element id="artifact" artifact-name="PetsCT:war exploded" />
-    </root>
-  </artifact>
-</component>

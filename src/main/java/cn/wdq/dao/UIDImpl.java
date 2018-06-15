@@ -26,7 +26,7 @@ public class UIDImpl implements UserInfoDAO{
     @Override
     public int haveSame(JSONObject json) {
         String user_name=json.getString("user_name");
-        return sqlSession.selectOne("cn.wdq.mapping.UserInfoDAO.hasSame",user_name);
+        return sqlSession.selectOne("cn.wdq.mapping.UserInfoDAO.haveSame",user_name);
     }
 
     @Override
@@ -88,5 +88,15 @@ public class UIDImpl implements UserInfoDAO{
     @Override
     public int clearAll() {
         return sqlSession.delete("cn.wdq.mapping.UserInfoDAO.clearAll");
+    }
+
+    @Override
+    public int addLoginHistory(UserInfo userInfo) {
+        return sqlSession.insert("cn.wdq.mapping.UserInfoDAO.addLoginHistory",userInfo);
+    }
+
+    @Override
+    public List<UserInfo> queryLogHis() {
+        return sqlSession.selectList("cn.wdq.mapping.UserInfoDAO.queryLogHis");
     }
 }

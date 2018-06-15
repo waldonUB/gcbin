@@ -1,22 +1,19 @@
-var top_template='<div class="header col-lg-12" style="background-color: #FFFFFF;margin-bottom: 10px">\n' +
-    '       <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"><img class="pull-right" v-bind:src="logo" style="width: 65%;height: 65%;"></div>'+
-    '        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9" style="padding-top: 5px">\n' +
-    '          <div class="col-lg-12" >\n' +
-    '            <span class="col-lg-9 col-md-9 col-sm-7 col-xs-7">' +
-    '            <ul class="nav nav-tabs">\n' +
-    '                <li :id="index" @click="switch_nav(model.funcode,index)" :class="{active:topDatas.nav_node===model.funcode}" v-for="model,index in treeInfo_new" role="presentation">' +
-    '                    <a :href="model.urls===undefined?\'#\':model.urls" class="dropdown-toggle" :data-toggle="model.children!==undefined?topDatas.dropdown:\'\'">{{model.funname}} <i :class="model.resicon"></i></a>' +
+var top_template='<header class="main-header col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #FFFFFF">' +
+    '           <ul class="nav nav-tabs">' +
+    '           <div class="col-lg-2 col-md-2 hidden-sm hidden-xs"><i class="fa fa-fw fa-vimeo nav-logo col-lg-2 col-md-2 hidden-sm hidden-xs"></i>' +
+    '            <a class="col-lg-2 col-md-2 hidden-sm hidden-xs nav-font">waldon</a></div>'+
+    '                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>' +
+'                    <li v-if="topDatas.userInfo.user_type===1" @click="switch_nav(0,index)" :class="{active:topDatas.nav_node===\'0\'}" style="margin-top: 5px"><a style="color:#66625F" href="../admin/admin.html">Console <i style="color: #85AB2E" class="fa fa-fw fa-forumbee"></i></a></li>' +
+    '                <li @click="switch_nav(model.funcode,index)" :class="{active:topDatas.nav_node===model.funcode}" v-for="model,index in treeInfo_new" role="presentation" style="margin-top: 5px;">' +
+    '                    <a :href="model.urls===undefined?\'#\':model.urls" class="dropdown-toggle" :data-toggle="model.children!==undefined?topDatas.dropdown:\'\'" style="color:#66625F">{{model.funname}} <i :class="model.resicon"></i></a>' +
     '                    <ul v-if="model.children!==undefined" class="dropdown-menu tree">'+
     '                       <li v-for="model,index in model.children"><a :href="(model.urls===undefined||model.children!==undefined)?\'#\':model.urls">{{model.funname}}<i :class="model.resicon" class="col-lg-4 pull-right"></i>' +
     '                       </a><treeNode :model="model"></treeNode></li>' +
     '                   </ul>'+
     '                </li>\n' +
-    '            </ul>' +
-    '            </span>'+
-    '            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 dropdown user user-menu">' +
-    '               <a href="#" class="dropdown-toggl" data-toggle="dropdown">'+
-    '               <span class="col-lg-3"><img id="little_head" class="user-image" style="height: 40px;width: 40px" v-bind:src="head_image"></span>'+
-    '               <span class="col-lg-8"><i style="font-family:\'楷体\';font-size: 16px;">{{topDatas.userInfo.user_name}}</i></span>'+
+    '            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 dropdown user user-menu pull-right">' +
+    '               <a href="#" class="dropdown-toggl pull-right" data-toggle="dropdown">'+
+    '               <span><a class="pull-right" style="font-family:\'楷体\';font-size: 16px;margin-top: 8px;">{{topDatas.userInfo.user_name}}</a><img id="little_head" class="user-image pull-right" style="height: 40px;width: 40px" v-bind:src="head_image"></span>'+
     '               </a>'+
     '               <ul class="dropdown-menu">'+
     '               <a href="#" class="user-header"><img @click="modify_headPic()" v-bind:src="head_image" class="img-circle" style="height: 160px;width: 175px" alt="User Image">\n' +
@@ -41,9 +38,8 @@ var top_template='<div class="header col-lg-12" style="background-color: #FFFFFF
     '                </div></li>'+
     '               </ul>'+
     '            </div>'+
-    '          </div>\n' +
-    '        </div>\n' +
-    '      </div>';
+    '            </ul>' +
+    '      </header>';
 var tree_template='<ul v-if="model.children!==undefined">' +
     '<li v-for="model,index in model.children">' +
     '<a :href="(model.urls===undefined||model.children!==undefined)?\'#\':model.urls">{{model.funname}}<i :class="model.resicon" class="col-lg-4 pull-right"></i></a>' +

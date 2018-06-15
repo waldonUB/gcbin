@@ -46,9 +46,51 @@
 <body style="background-color: #F6F6F6">
 <div class="wrapper" id="blog_el">
     <top ref="ref_top"></top>
-    <div class="container">
-        <div class="col-lg-8 col-md-8" style="margin:0 0 5px 30px;padding-right: 0px;">
-            <div class="panel" style="margin-bottom: 10px;" v-for="blog,index in blog_info">
+    <section class="content">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 blog-fun pull-right">
+            <div class="panel box box-info" style="margin:0 0 5px 0">
+                <div class="panel-body">
+                <span data-toggle="modal" data-target="#question_modal" class="col-lg-4 col-md-4 fa fa-handshake-o"
+                      style="font-size: 25px;text-align: center;margin-top: 15px;color: #639D3C;cursor: pointer">
+                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">交流</p>
+                </span>
+                    <span class="col-lg-4 col-md-4 fa fa-book"
+                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#43D480;cursor: pointer">
+                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">书店</p>
+                </span>
+                    <span class="col-lg-4 col-md-4 fa fa-gamepad"
+                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#EC6149;cursor: pointer">
+                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">游戏</p>
+                </span>
+                    <span class="col-lg-4 col-md-4 fa fa-bolt"
+                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#FFCF00;cursor: pointer">
+                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">Live</p>
+                </span>
+                    <span class="col-lg-4 col-md-4 fa fa-commenting"
+                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#0E88EB;cursor: pointer">
+                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">咨询</p>
+                </span>
+                </div>
+            </div>
+            <div class="panel hidden-sm hidden-xs">
+                <div class="panel-body">
+                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-star">&nbsp;&nbsp;&nbsp;收藏</i></p>
+                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-question-circle">&nbsp;&nbsp;&nbsp;我关注的问题</i>
+                    </p>
+                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-plus-square">&nbsp;&nbsp;&nbsp;我的邀请</i>
+                    </p>
+                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-credit-card">&nbsp;&nbsp;&nbsp;我的礼券</i>
+                    </p>
+                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-bank">&nbsp;&nbsp;&nbsp;社区服务中心</i></p>
+                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-copyright">&nbsp;&nbsp;&nbsp;版权服务中心</i>
+                    </p>
+                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-edit">&nbsp;&nbsp;&nbsp;公共编辑动态</i></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>
+        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 blog-content">
+            <div class="panel box box-info" style="margin-bottom: 10px;" v-for="blog,index in blog_info">
                 <div class="panel-body">
                     <p style="color: #8590A6">内容分类,来自:{{blog.blog_classify}}
                         <!--<button type="button" class="close">
@@ -104,47 +146,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3">
-            <div class="panel" style="margin:0 0 5px 0">
-                <div class="panel-body">
-                <span data-toggle="modal" data-target="#question_modal" class="col-lg-4 col-md-4 fa fa-handshake-o"
-                      style="font-size: 25px;text-align: center;margin-top: 15px;color: #639D3C;cursor: pointer">
-                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">交流</p>
-                </span>
-                    <span class="col-lg-4 col-md-4 fa fa-book"
-                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#43D480;cursor: pointer">
-                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">书店</p>
-                </span>
-                    <span class="col-lg-4 col-md-4 fa fa-gamepad"
-                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#EC6149;cursor: pointer">
-                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">游戏</p>
-                </span>
-                    <span class="col-lg-4 col-md-4 fa fa-bolt"
-                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#FFCF00;cursor: pointer">
-                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">Live</p>
-                </span>
-                    <span class="col-lg-4 col-md-4 fa fa-commenting"
-                          style="font-size: 25px;text-align: center;margin-top: 15px;color:#0E88EB;cursor: pointer">
-                    <p style="font-size: 14px;color: #77839C;margin-top: 10px">咨询</p>
-                </span>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-body">
-                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-star">&nbsp;&nbsp;&nbsp;收藏</i></p>
-                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-question-circle">&nbsp;&nbsp;&nbsp;我关注的问题</i>
-                    </p>
-                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-plus-square">&nbsp;&nbsp;&nbsp;我的邀请</i>
-                    </p>
-                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-credit-card">&nbsp;&nbsp;&nbsp;我的礼券</i>
-                    </p>
-                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-bank">&nbsp;&nbsp;&nbsp;社区服务中心</i></p>
-                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-copyright">&nbsp;&nbsp;&nbsp;版权服务中心</i>
-                    </p>
-                    <p style="color: #77839C;padding-top: 10px"><i class="fa fa-edit">&nbsp;&nbsp;&nbsp;公共编辑动态</i></p>
-                </div>
-            </div>
-        </div>
+
         <!--提问题-->
         <div class="modal fade" id="question_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog modal-lg" role="document">
@@ -187,7 +189,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 <script src="../../resource/js/jquery.js"></script>
 <script src="../../resource/js/bootstrap.min.js"></script>

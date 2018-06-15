@@ -28,6 +28,10 @@ public class UserInfo implements Serializable {
     private String last_time;
     /**所属地区*/
     private String district;
+    /**ip地址*/
+    private String ip;
+    /**ip归属地*/
+    private String ip_area;
 
     public String getCuserid() {
         return cuserid;
@@ -109,5 +113,20 @@ public class UserInfo implements Serializable {
         this.district = district;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getIp_area() {
+        return ip_area;
+    }
+
+    public void setIp_area(String ip_area) {
+        this.ip_area = ip_area;
+    }
 }
 

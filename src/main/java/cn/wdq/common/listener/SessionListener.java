@@ -17,8 +17,8 @@ import javax.servlet.http.HttpSessionListener;
 
 public class SessionListener implements HttpSessionListener {
     private Logger logger=Logger.getLogger(SessionListener.class);
-    static AdminDAOImpl adminDAOImpl;
-    static UIDImpl uIDImpl;
+    private static AdminDAOImpl adminDAOImpl;
+    private static UIDImpl uIDImpl;
     static {
         System.out.println("进入sessionListener");
         ApplicationContext cxt=new ClassPathXmlApplicationContext("springmvc-servlet.xml");

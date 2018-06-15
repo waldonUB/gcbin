@@ -87,4 +87,15 @@ public interface UserInfoDAO {
      * @return 是否删除成功的状态
      * */
     int clearAll();
+    /**
+     * 增加用户登录历史
+     * @param userInfo 登录用户信息
+     * @return 增加是否成功的状态 1成功 0失败
+     * */
+    int addLoginHistory(UserInfo userInfo);
+    /**
+     * 查询登录历史所有用户信息
+     * @return 登录历史表所有用户信息集合
+     * */
+    List<UserInfo> queryLogHis();
 }

@@ -50,10 +50,6 @@ public class LoginServiceImpl implements LoginService{
 		uIDImpl.deleteOnline(cuserid);
 		//增加最近登录日期字段
 		userInfo.setCuserid(cuserid);
-		userInfo.setIs_online(1);
-		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String last_time=simpleDateFormat.format(new Date());
-		userInfo.setLast_time(last_time);
 		uIDImpl.insertLoginInfo(userInfo);
 	}
 
@@ -76,5 +72,17 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public void updateLastTime(String user_name) {
 		uIDImpl.updateLastTime(user_name);
+	}
+
+	@Override
+	public int addLoginHistory(UserInfo userInfo) {
+
+		userInfo.setCuserid(null);
+		return uIDImpl.addLoginHistory(userInfo);
+	}
+
+	@Override
+	public List<UserInfo> queryLogHis() {
+		return uIDImpl.queryLogHis();
 	}
 }
