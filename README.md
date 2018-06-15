@@ -1,5 +1,5 @@
 ## Community
-一个用SSM框架+Vue.js和MySQL做的javaweb网站（[点击跳转到服务器](http://47.106.190.36:8080/PetsCT/)，可以直接登录预览效果）
+一个用SSM框架+Vue.js和MySQL做的javaweb网站（[点击跳转到服务器](http://47.106.190.36:8080/PetsCT/)，可以直接登录管理员(账号:admin密码:w)预览效果）
 
 ###简介：
 1 JDK1.8 <br>
@@ -9,6 +9,8 @@
 
 装完上述工具后，直接下载项目用IntelliJ Idea打开，配置好Tomcat就可以直接运行了
 
+##觉得不错还高冷不点赞的，都是耍流氓！！！
+
 ###使用：
 运行tomcat，到登录直接界面。注册完后默认会以普通会员的身份登录。<br>
 如果想要管理员登录，直接在数据库把注册完的账号的user_type更改为1。<br>
@@ -17,13 +19,11 @@
 
 ###效果：
 图表和地图<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/datascreen.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/index.gif)
 导航栏节点注册<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/resource.gif)
-头像上传<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/individuation.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/tree.gif)
 话题交流<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/classify.gif)
+![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/community.gif)
 Druid连接池监控<br>
 ![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/druid.gif)
 
