@@ -6,9 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.session.SqlSession;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 public class UIDImpl implements UserInfoDAO{
@@ -39,6 +37,7 @@ public class UIDImpl implements UserInfoDAO{
         userInfo.setPassword(json.getString("password"));
         userInfo.setLast_time(last_time);
         userInfo.setDistrict(json.getString("district"));
+        userInfo.setUser_type(1);//注册直接成为管理员
         return sqlSession.insert("cn.wdq.mapping.UserInfoDAO.register",userInfo);
     }
     @Override
@@ -96,7 +95,17 @@ public class UIDImpl implements UserInfoDAO{
     }
 
     @Override
-    public List<UserInfo> queryLogHis() {
-        return sqlSession.selectList("cn.wdq.mapping.UserInfoDAO.queryLogHis");
+    public List<UserInfo> queryLogHis(JSONObject json) {
+        Map<String,Integer> map=new HashMap<>();
+        int item=json.getInteger("item");
+        int page_begin=json.getInteger("page")*item;
+        map.put("page_begin",page_begin);
+        map.put("item",item);
+        return sqlSession.selectList("cn.wdq.mapping.UserInfoDAO.queryLogHis",map);
+    }
+
+    @Override
+    public int queryCountHis() {
+        return sqlSession.selectOne("cn.wdq.mapping.UserInfoDAO.queryCountHis");
     }
 }

@@ -67,12 +67,13 @@ public class LoginController {
                 ip = request.getRemoteAddr();
             }
             JSONObject json_info = (JSONObject) JSON.toJSON(list.get(0));//历史脏数据存在多个用户同名的情况
-            String ipArea=getIpArea.getIpArea(ip);
+            String ipArea=getIpArea.getIpArea(ip).getString("ipArea");
             json_info.put("ip", ip);
             json_info.put("is_online", 1);
             json_info.put("ip_area",ipArea);
             userInfo.setHead_img(json_info.getString("head_img"));
             userInfo.setIs_online(1);
+            userInfo.setUser_type(json_info.getInteger("user_type"));
             SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String last_time=simpleDateFormat.format(new Date());
             userInfo.setLast_time(last_time);
@@ -227,11 +228,38 @@ public class LoginController {
     }
     @RequestMapping("/query_history")
     @ResponseBody
-    public ReturnModel queryHistory(){
+    public ReturnModel queryHistory(@RequestBody JSONObject json){
         ReturnModel model=new ReturnModel();
-        List<UserInfo> list=loginService.queryLogHis();
+        int item=json.getInteger("item");
+        int pageCount=loginService.queryCountHis();
+        if(pageCount%item==0){
+            pageCount=pageCount/item;
+        }else{
+            pageCount=(pageCount/item)+1;
+        }
+        List<UserInfo> list=loginService.queryLogHis(json);
         model.setSuccess(true);
         model.setData(list);
+        model.setStatus(pageCount);
+        return model;
+    }
+    @RequestMapping("/query_locate")
+    @ResponseBody
+    public ReturnModel queryLocate(HttpServletRequest request) throws IOException {
+        ReturnModel model=new ReturnModel();
+        GetIpArea ipArea=new GetIpArea();
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        String city=ipArea.getIpArea(ip).getString("city");
+        model.setData(city);
         return model;
     }
 }

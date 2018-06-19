@@ -3,6 +3,7 @@ package cn.wdq.common.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,14 +17,16 @@ import java.net.URLConnection;
  * @author waldon
  * */
 public class GetIpArea {
+    private Logger logger=Logger.getLogger(GetIpArea.class);
     /**
      * 获取登录用户的ip归属地
      * @param ip 用户登录ip
      * @return ip归属地的数据
      * */
-    public String getIpArea(String ip) throws IOException {
+    public JSONObject getIpArea(String ip) throws IOException {
         BufferedReader reader=null;
-        String ipArea=null;
+        String ipArea;
+        JSONObject areaInfo=new JSONObject();
         try {
             URL url = new URL("http://ip.taobao.com/service/getIpInfo.php?ip="+ip);
             URLConnection connection=url.openConnection();
@@ -37,23 +40,28 @@ public class GetIpArea {
             JSONObject ipInfo= (JSONObject) json.get("data");
             String country=ipInfo.getString("country");
             if(country.equals("XX")){
-                country="局域网";
-                ipArea=country;
+                ipArea="局域网";
+                areaInfo.put("ipArea",ipArea);
+                areaInfo.put("city","获取失败");
             }else{
                 String region=ipInfo.getString("region");
                 String city=ipInfo.getString("city");
                 String isp=ipInfo.getString("isp");
                 ipArea=country+region+city+isp;
+                areaInfo.put("ipArea",ipArea);
+                areaInfo.put("city",city);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("method(getIpArea) 读取用户ip信息失败："+e);
         }catch (JSONException e){
             ipArea="网络故障,无法获取";
+            areaInfo.put("ipArea",ipArea);
+            areaInfo.put("city","获取失败");
         }finally {
             if (reader != null) {
                 reader.close();
             }
         }
-        return ipArea;
+        return areaInfo;
     }
 }

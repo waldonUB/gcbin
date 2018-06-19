@@ -5,7 +5,6 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-      <link rel="shortcut icon" href="resource/images/favicon.ico"><!--当前目录下-->
       <link rel="stylesheet" href="resource/css/bootstrap.css">
       <link rel="stylesheet" href="resource/css/font-awesome.min.css">
       <link rel="stylesheet" href="resource/css/AdminLTE.min.css">
@@ -49,7 +48,7 @@
                           </button>
                       </div>
                       <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 input-group" style="padding-top: 15px;">
-                          <p style="color: #666">还没有账号？<a data-toggle="modal" data-target="#register_modal" style="color: #2bb8aa;cursor: pointer">免费注册</a></p>
+                          <p style="color: #666">还没有账号？<a @click="locate_type()" data-toggle="modal" data-target="#register_modal" style="color: #2bb8aa;cursor: pointer">免费注册</a></p>
                           <p style="text-align: center;color: #666">———用合作网账号登录———</p>
                           <p style="text-align: center">
                               <i class="fa fa-fw fa-qq" style="padding-right: 20px;cursor: pointer;color: #0188FB"></i>
@@ -99,6 +98,11 @@
                       </div>
                   </div>
                   <div class="modal-footer">
+                      <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
+                          <label class="general-font">正在定位您的地址：</label>
+                          <i v-show="is_locate" class="fa fa-fw fa-spinner fa-spin" style="color: #0084FF"></i>
+                          <i v-show="!is_locate" class="general-font">{{city}}</i>
+                      </div>
                       <button id="cancel_modal" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                       <button @click="register" type="button" class="btn btn-primary" >注册</button>
                   </div>
@@ -326,11 +330,12 @@
               {name: '合肥', value: 229},
               {name: '武汉', value: 273},
               {name: '大庆', value: 279},
-              {name: 'P城', value: 279},
-              {name: '北海', value: 279}
+              {name: 'P城', value: 279}
           ],
           new_data:[],
-          is_support:false
+          is_support:false,
+          is_locate:true,//定位地区的加载图标
+          city:null
       };
       var loginVue=new Vue({
           el:"#login_config",
@@ -344,6 +349,13 @@
                               loginDatas.new_data.push(loginDatas.data[i].name);
                           }
                       }
+                  }
+              },
+              city:function (value) {
+                  if(value===null||value==='获取失败'){
+                      loginDatas.search_text='';
+                  }else{
+                      loginDatas.search_text=value;
                   }
               }
           },
@@ -484,6 +496,25 @@
                   Vue.set(loginDatas,'is_selected','Y');//执行顺序：1
                   Vue.set(loginDatas,'new_data',[]);//打字内容跟选择内容一样时，将不会执行watch里面的function
                   //loginDatas.new_data=[];//把他的框清空
+              },
+              /**
+               * 重置定位的状态
+               * */
+              locate_type:function () {
+                  loginDatas.is_locate=true;
+                  loginDatas.city=null;//重新watch city属性
+                  $.ajax({
+                      url:'/PetsCT/query_locate',
+                      type:'POST',
+                      dataType:'json',
+                      contentType:'application/json;charset=utf-8',
+                      success:function (result) {
+                          setTimeout(function () {
+                              loginDatas.is_locate=false;
+                              loginDatas.city=result.data;
+                          },1000);
+                      }
+                  });
               }
           }
       });

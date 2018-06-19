@@ -72,5 +72,10 @@ public interface LoginService {
 	 * 增加登录历史用户
 	 * @return 登录历史表所有用户的信息
 	 * */
-	List<UserInfo> queryLogHis();
+	List<UserInfo> queryLogHis(JSONObject json);
+	/**
+	 * 查询登录历史用户数据行数
+	 * @return 历史用户数据总量
+	 * */
+	int queryCountHis();
 }

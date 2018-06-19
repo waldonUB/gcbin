@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>控制台</title>
+    <title>console</title>
     <meta charset="utf-8">
     <meta name="content-type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" href="../../resource/images/favicon.ico">
     <link rel="stylesheet" href="../../resource/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../resource/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../resource/css/AdminLTE.min.css">
@@ -15,9 +14,6 @@
     <link rel="stylesheet" href="../../resource/css/zTreeStyle/zTreeStyle.css">
     <script src="../../resource/js/vue.min.js"></script>
     
-    <style>
-
-    </style>
   </head>
   
   <body>
@@ -32,8 +28,8 @@
                 <span id="model_info"><label style="font-family:'楷体';font-size: 16px">模块注册</label></span>
               </h3>
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" @click="query_usertype('all')" title="刷新">
-                  <i class="fa fa-refresh fa-fw"></i></button>
+                <button type="button" class="btn btn-box-tool" @click="query_usertype('all')" title="返回用户管理">
+                  返回<i class="fa fa-fw fa-spin fa-refresh"></i></button>
               </div>
               <div id="funTree" class="ztree"></div>
             </div>
@@ -121,7 +117,7 @@
                 <button class="btn btn-default btn-sm" :disabled="userData.init_button" @click="delete_tree(current_model)"><i class="fa fa-fw fa-trash"></i>删除</button>
                 <button class="btn btn-default btn-sm" @click="add_root_tree()"><i class="fa fa-fw fa-folder-o"></i>新增目录</button>
               </div>
-              <form class="form-inline" style="margin-top: 20px">
+              <div class="form-inline" style="margin-top: 20px">
                 <div class="form-group-sm col-lg-4 col-md-4 col-sm-4 col-xs-4">
                   <label class="in-label">编码</label>
                   <input :disabled="input_disable" id="id_funcode" v-model="current_model.funcode" type="text" class="form-control" placeholder="编码">
@@ -168,7 +164,7 @@
                         <button class="btn btn-default btn-sm " @click="save_tree(current_model)"><i class="fa fa-save"></i>保存</button>
                       </div>
                   </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -176,7 +172,6 @@
     </section>
   </div>
     <script src="../../resource/js/jquery.min.js"></script>
-    <script src="../../resource/js/jquery.js"></script>
     <script src="../../resource/js/bootstrap.min.js"></script>
     <script src="../../resource/js/sweetalert2.min.js"></script>
     <script src="../../resource/js/components/all-top.js"></script>

@@ -2,6 +2,10 @@ body{
     margin: 0;
     padding: 0;
 }
+/**解决vue延迟加载闪烁*/
+[v-cloak] {
+    display: none;
+}
 /**导航栏logo*/
 .nav-logo{
     font-size: 40px;color: #D20A0A;margin-top: 7px;
@@ -9,6 +13,12 @@ body{
 /**导航栏字*/
 .nav-font{
     font-size: 30px;font-weight: lighter;color: #565A5F;font-family: Arial;margin-top: 5px;
+}
+/**普通显示字体*/
+.general-font{
+    font-size: 13px;
+    color: #777;
+    font-weight: 500;
 }
 /**导航栏节点开始*/
 .tree{
@@ -56,7 +66,7 @@ body{
     width:55px;
     padding-left: 0;
     padding-right: 0;
-    font-size: 5px;
+    font-size: 13px;
     font-weight: 800;
     margin-bottom: 15px;
     color: #66625F;

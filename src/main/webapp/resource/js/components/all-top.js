@@ -3,7 +3,7 @@ var top_template='<header class="main-header col-lg-12 col-md-12 col-sm-12 col-x
     '           <div class="col-lg-2 col-md-2 hidden-sm hidden-xs"><i class="fa fa-fw fa-vimeo nav-logo col-lg-2 col-md-2 hidden-sm hidden-xs"></i>' +
     '            <a class="col-lg-2 col-md-2 hidden-sm hidden-xs nav-font">waldon</a></div>'+
     '                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs"></div>' +
-'                    <li v-if="topDatas.userInfo.user_type===1" @click="switch_nav(0,index)" :class="{active:topDatas.nav_node===\'0\'}" style="margin-top: 5px"><a style="color:#66625F" href="../admin/admin.html">Console <i style="color: #85AB2E" class="fa fa-fw fa-forumbee"></i></a></li>' +
+'                    <li v-if="topDatas.userInfo.user_type===1" @click="switch_nav(0,index)" :class="{active:topDatas.nav_node===\'0\'}" style="margin-top: 5px"><a style="color:#66625F" href="../admin/admin.html">console <i style="color: #85AB2E" class="fa fa-fw fa-forumbee"></i></a></li>' +
     '                <li @click="switch_nav(model.funcode,index)" :class="{active:topDatas.nav_node===model.funcode}" v-for="model,index in treeInfo_new" role="presentation" style="margin-top: 5px;">' +
     '                    <a :href="model.urls===undefined?\'#\':model.urls" class="dropdown-toggle" :data-toggle="model.children!==undefined?topDatas.dropdown:\'\'" style="color:#66625F">{{model.funname}} <i :class="model.resicon"></i></a>' +
     '                    <ul v-if="model.children!==undefined" class="dropdown-menu tree">'+

@@ -76,13 +76,17 @@ public class LoginServiceImpl implements LoginService{
 
 	@Override
 	public int addLoginHistory(UserInfo userInfo) {
-
 		userInfo.setCuserid(null);
 		return uIDImpl.addLoginHistory(userInfo);
 	}
 
 	@Override
-	public List<UserInfo> queryLogHis() {
-		return uIDImpl.queryLogHis();
+	public List<UserInfo> queryLogHis(JSONObject json) {
+		return uIDImpl.queryLogHis(json);
+	}
+
+	@Override
+	public int queryCountHis() {
+		return uIDImpl.queryCountHis();
 	}
 }

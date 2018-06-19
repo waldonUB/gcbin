@@ -5,10 +5,12 @@
     <select id="queryUserType" parameterType="java.util.Map" resultType="com.alibaba.fastjson.JSONObject">
         <choose>
             <when test="userType=='online'">
-                select * from login_info where is_online= 1
+                select cuserid,user_name,password,dr,user_type,is_lock,is_online,
+                last_time,ip,district,ip_area from login_info where is_online= 1
             </when>
             <otherwise>
-                select * from sm_user
+                select cuserid,user_name,password,dr,user_type,is_lock,is_online,
+                last_time,district from sm_user
                 <choose>
                     <when test="userType=='all'">
                         limit #{page},10
@@ -27,7 +29,8 @@
         select count(1) from sm_user
     </select>
     <select id="querySearch" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-        select * from sm_user where user_name like "%"#{user_name}"%"
+        select cuserid,user_name,password,dr,user_type,is_lock,is_online,
+                last_time,district from sm_user where user_name like "%"#{user_name}"%"
     </select>
     <delete id="deleteCustomer" parameterType="java.lang.String">
         delete from sm_user where user_name=#{user_name}

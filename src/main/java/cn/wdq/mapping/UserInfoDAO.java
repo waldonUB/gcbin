@@ -97,5 +97,10 @@ public interface UserInfoDAO {
      * 查询登录历史所有用户信息
      * @return 登录历史表所有用户信息集合
      * */
-    List<UserInfo> queryLogHis();
+    List<UserInfo> queryLogHis(JSONObject json);
+    /**
+     * 查询登录历史用户数据行数
+     * @return 历史用户数据总量
+     * */
+    int queryCountHis();
 }

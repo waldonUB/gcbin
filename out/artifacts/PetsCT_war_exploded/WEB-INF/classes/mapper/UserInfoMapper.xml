@@ -13,7 +13,7 @@
     <!--注册新用户-->
     <insert id="register" parameterType="cn.wdq.entities.UserInfo">
         insert into sm_user(cuserid,user_name,password,dr,user_type,is_lock,is_online,head_img,last_time,district)
-        values(#{cuserid},#{user_name},#{password},0,0,0,0,'',#{last_time},#{district})
+        values(#{cuserid},#{user_name},#{password},0,#{user_type},0,0,'',#{last_time},#{district})
     </insert>
     <delete id="forceLogout" parameterType="java.lang.String">
         delete from login_info where user_name=#{user_name}
@@ -47,11 +47,16 @@
     </delete>
     <!--增加用户登录历史-->
     <insert id="addLoginHistory" parameterType="cn.wdq.entities.UserInfo">
-        INSERT INTO login_history(cuserid,user_name,password,dr,user_type,is_lock,is_online,head_img,last_time,ip,district,ip_area)
-        VALUES (#{cuserid},#{user_name},#{password},#{dr},#{user_type},#{is_lock},#{is_online},#{head_img},#{last_time},#{ip},#{district},#{ip_area})
+        INSERT INTO login_history(cuserid,user_name,password,dr,user_type,is_lock,is_online,last_time,ip,district,ip_area)
+        VALUES (#{cuserid},#{user_name},#{password},#{dr},#{user_type},#{is_lock},#{is_online},#{last_time},#{ip},#{district},#{ip_area})
     </insert>
     <!--查询用户登录历史-->
-    <select id="queryLogHis" resultType="com.alibaba.fastjson.JSONObject">
-        SELECT * FROM login_history ORDER BY last_time DESC
+    <select id="queryLogHis" parameterType="java.util.Map" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT cuserid,user_name,password,dr,user_type,is_lock,is_online,
+            last_time,ip,district,ip_area FROM login_history ORDER BY last_time DESC LIMIT #{page_begin},#{item}
+    </select>
+    <!--登录历史用户数据总量-->
+    <select id="queryCountHis" resultType="java.lang.Integer">
+        select count(1) from login_history
     </select>
 </mapper>
