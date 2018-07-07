@@ -3,11 +3,16 @@ package cn.wdq.service;
 import cn.wdq.dao.UIDImpl;
 import cn.wdq.entities.UserInfo;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -89,4 +94,11 @@ public class LoginServiceImpl implements LoginService{
 	public int queryCountHis() {
 		return uIDImpl.queryCountHis();
 	}
+
+//	@Override
+//	public HttpResponse queryHttpResponse(HttpGet httpGet) throws IOException {
+//		HttpClient client = HttpClientBuilder.create().build();
+//		HttpResponse httpResponse = client.execute(httpGet);
+//		return httpResponse;
+//	}
 }

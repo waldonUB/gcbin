@@ -2,8 +2,11 @@ package cn.wdq.service;
 
 import cn.wdq.entities.UserInfo;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -78,4 +81,8 @@ public interface LoginService {
 	 * @return 历史用户数据总量
 	 * */
 	int queryCountHis();
+	/**
+	 * 测试httpResponse
+	 * */
+//	HttpResponse queryHttpResponse(HttpGet httpGet) throws IOException;
 }

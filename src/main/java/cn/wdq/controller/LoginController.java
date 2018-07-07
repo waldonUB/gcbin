@@ -1,12 +1,21 @@
 package cn.wdq.controller;
 
 import cn.wdq.common.util.GetIpArea;
+import cn.wdq.common.util.WeChat;
 import cn.wdq.entities.ReturnModel;
 import cn.wdq.entities.UserInfo;
 import cn.wdq.mapping.CommonDAO;
 import cn.wdq.service.LoginService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +45,9 @@ public class LoginController {
     private LoginService loginService;
     @Autowired
     CommonDAO commonDAO;
+//    @Autowired
+//    private CloseableHttpClient httpClient;
+
 
     /**
      * 登陆验证
@@ -261,5 +274,31 @@ public class LoginController {
         String city=ipArea.getIpArea(ip).getString("city");
         model.setData(city);
         return model;
+    }
+    @RequestMapping("/wxLogin")
+    public void wxLogin(HttpServletResponse response) throws IOException {
+        String backUrl = "http://21t284120p.imwork.net:15390/PetsCT/callBack";
+        String url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+WeChat.APPID+
+                "&redirect_uri="+URLEncoder.encode(backUrl,"UTF-8")+
+                "&response_type=code"+
+                "&scope=snsapi_userinfo"+// snsapi_userinfo
+                "&state=STATE#wechat_redirect";
+        response.sendRedirect(url);
+    }
+    @RequestMapping("/callBack")
+    public void callBack(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String code = request.getParameter("code");
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" +WeChat.APPID+
+                "&secret=" +WeChat.APPSECRET+
+                "&code=" +code+
+                "&grant_type=authorization_code";
+        JSONObject json = WeChat.deGetJson(url);
+        String openid = json.getString("openid");
+        String token = json.getString("access_token");
+        String infoUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=" +token+
+                "&openid=" +openid+
+                "&lang=zh_CN";
+        JSONObject userInfo = WeChat.deGetJson(infoUrl);
+        System.out.println(userInfo);
     }
 }

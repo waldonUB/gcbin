@@ -1,3 +1,4 @@
+import cn.wdq.entities.UserInfo;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -26,5 +27,6 @@ public class ReplaceTest {
         System.out.println(list3);
         list.removeAll(list2);
         System.out.println(list3);
+
     }
 }
