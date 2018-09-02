@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录历史</title>
+    <meta charset="utf-8">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../../resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resource/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../resource/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../resource/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../../resource/css/hap.css">
+    <link rel="stylesheet" href="../../resource/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="../../resource/css/pagination.css">
+    <link rel="stylesheet" href="../../resource/css/zTreeStyle/zTreeStyle.css">
+    <script src="../../resource/js/vue.min.js"></script>
+</head>
+<body>
+<div id="history_el" class="wrapper">
+    <top ref="ref_top"></top>
+    <section class="content">
+        <div class="row" v-cloak>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><!--必要，避免box上浮-->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <span><label style="font-family:'楷体';font-size: 16px">历史登录用户</label></span>
+                        </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed">
+                                <thead>
+                                <tr role="row" style="white-space:nowrap;">
+                                    <th>#</th>
+                                    <th>用户ID</th>
+                                    <th>用户名</th>
+                                    <th>用户类型</th>
+                                    <th>锁定状态</th>
+                                    <th>注册地区</th>
+                                    <th>登录IP</th>
+                                    <th>登录地址</th>
+                                    <th>最近登录时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr role="row" v-for="user,item in users" style="white-space: nowrap;">
+                                    <td>{{item+1+dataModel.pageInfo.current*dataModel.pageInfo.item}}</td>
+                                    <td>{{user.cuserid}}</td>
+                                    <td>{{user.user_name}}</td>
+                                    <td><span class="badge" :class="color_change(user.user_type)">{{translate_usertype(user.user_type)}}</span></td>
+                                    <td><span class="badge" :class="color_change(user.is_lock===1?0:2)">{{translate_islock(user.is_lock)}}</span></td>
+                                    <td>{{user.district}}</td>
+                                    <td>{{user.ip}}</td>
+                                    <td>{{user.ip_area}}</td>
+                                    <td>{{user.last_time}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pages">
+                            <div id="Pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="../../resource/js/jquery.min.js"></script>
+<script src="../../resource/js/jquery.js"></script>
+<script src="../../resource/js/bootstrap.min.js"></script>
+<script src="../../resource/js/sweetalert2.min.js"></script>
+<script src="../../resource/js/components/all-top.js"></script>
+<script src="../../resource/js/jquery.pagination.js"></script>
+<script>
+    var dataModel={
+        users:[],
+        pageInfo:{
+            current:0,
+            pagecount:20,
+            item:20//每页条数
+        }
+    };
+    var historyVue=new Vue({
+        el:'#history_el',
+        data:dataModel,
+        methods:{
+            //初始化分页
+            init:function () {
+                $("#Pagination").pagination(this.pageInfo.pagecount,{
+                    current_page:this.pageInfo.current,
+                    callback:this.nextPage
+                });
+            },
+            nextPage:function (current) {
+                this.pageInfo.current = current;
+                this.goto();
+            },
+            //分页跳转
+            goto:function () {
+              $.ajax({
+                  url:'/gcbin/query_history',
+                  data:JSON.stringify({"page":dataModel.pageInfo.current,"item":dataModel.pageInfo.item}),
+                  dataType:'json',
+                  type:'POST',
+                  contentType:'application/json;charset=utf-8',
+                  success:function (result) {
+                      dataModel.users=result.data;
+                  }
+              });
+            },
+            queryHistory:function () {
+                var that=this;
+                swal({
+                    //text:"加载中...",
+                    imageUrl: "../../resource/images/preloader.gif",
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                });
+                $.ajax({
+                    url:'/gcbin/query_history',
+                    data:JSON.stringify({"page":0,"item":dataModel.pageInfo.item}),
+                    dataType:'json',
+                    type:'POST',
+                    contentType:"application/json;charset=utf-8",
+                    success:function (result) {
+                        dataModel.users=result.data;
+                        dataModel.pageInfo.pagecount=result.status;
+                        that.init();//初始化分页
+                        setTimeout(function () {
+                            swal.close();
+                        },300);
+                    }
+                });
+            },
+            /**
+             * 翻译用户类型
+             * */
+            translate_usertype:function (data) {
+                if(data===0){
+                    return "会员"
+                }else if(data===1){
+                    return "管理员"
+                }
+            },
+            /**
+             * 翻译在线状态
+             * */
+            translate_online:function (data) {
+                if(data===0){
+                    return "离线";
+                }else if(data===1){
+                    return "在线";
+                }else if(data===2){
+                    return ""
+                }
+            },
+            /**
+             * 翻译锁定状态
+             * */
+            translate_islock:function (data) {
+                if(data===0){
+                    return "未锁定";
+                }else if(data===1){
+                    return "锁定";
+                }
+            },
+            /**
+             * 改变字段颜色
+             * */
+            color_change:function (data) {
+                if(data===0){
+                    return "bg-red"
+                }else if(data===1){
+                    return "bg-green"
+                }
+            }
+        },
+        mounted:function () {
+            this.queryHistory();
+            this.$refs.ref_top.switch_nav('30');
+        }
+    });
+</script>
+</body>
+</html>

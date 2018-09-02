@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resource/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../resource/css/sweetalert2.min.css">
+</head>
+<body style="background-color: #F6F6F6">
+<div class="container" id="blog_test">
+    <div class="row col-lg-12">
+        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
+        <a class="input-group input-group-sm" href="#">
+            <input type="text" class="form-control">
+            <div class="input-group-addon"><i class="fa fa-search "></i></div>
+        </a>
+        <div class="col-lg-12 col-sm-12" style="overflow:auto;">
+            <table class="table table-bordered table-hover dataTable"
+                   role="grid" aria-describedby="example1_info">
+                <thead>
+                <tr role="row" style="white-space:nowrap;">
+                    <th>#</th>
+                    <th class="hidden">主键</th>
+                    <th>组织</th>
+                    <th>仓库</th>
+                    <th>单据类型</th>
+                    <th class="hidden">部门</th>
+                    <th class="hidden">扫描</th>
+                    <th>初审</th>
+                    <th>审核</th>
+                    <th class="hidden">复核</th>
+                    <th>数量</th>
+                    <th class="hidden">分配时间</th>
+                    <th class="hidden">分配人</th>
+                    <th class="hidden">dr</th>
+                    <th class="hidden">ts</th>
+                    <th class="hidden">自定义1</th>
+                    <th class="hidden">自定义1</th>
+                    <th class="hidden">自定义1</th>
+                </tr>
+                </thead>
+                <tbody v-cloak>
+
+                <tr  role="row"  style="white-space: nowrap;">
+                    <td>
+                        <a  class="form-control" href="#">
+                            ss
+                            <i @click="onRef_busiman('pk_firstcheck')"  class="fa fa-search pull-right"
+                            ></i>
+                        </a></td>
+                    <td >
+                        <a class="input-group input-group-sm" href="#">
+                            <input type="text" class="form-control">
+                            <div class="input-group-addon"><i class="fa fa-search "></i></div>
+                        </a>
+                    </td>
+                </tr>
+                <tr  role="row"  style="white-space: nowrap;">
+                    <td>
+                        <a  class="form-control" href="#">
+                            ss
+                            <i @click="onRef_busiman('pk_firstcheck')"  class="fa fa-search pull-right"
+                            ></i>
+                        </a></td>
+                    <td >
+                        <a class="input-group input-group-sm" href="#">
+                            <input type="text" class="form-control">
+                            <div class="input-group-addon"><i class="fa fa-search "></i></div>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog" aria-hidden="true" style="margin: auto">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">新增/修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputName2">楼栋&nbsp;</label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputEmail2">是否拆分*</label>
+                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputName2">备注&nbsp;</label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe" >
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputName2">套数*</label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe" >
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputName2">面积*</label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe" >
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputName2">金额*</label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe" >
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px" for="exampleInputEmail2">工程可达预售时间</label>
+                            <date-picker></date-picker>
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputEmail2">营销预计取得预售证时间</label>
+                            <date-picker></date-picker>
+                        </div>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label style="width: 100px"  for="exampleInputEmail2">实际取得预售证时间</label>
+                            <date-picker></date-picker>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn-default btn-sm" data-toggle="modal" data-target="#myModal">切换</button>
+    <a href="../test/selected_test.html" class="btn-default btn-sm" data-toggle="modal" data-target="#myModal">链接</a>
+    <div id="jq_test">
+
+    </div>
+    <div class="panel col-lg-9 col-md-9">
+        <div class="panel-body">
+            <p style="color: #8590A6">内容分类,来自:Java
+                <button type="button" class="close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </p>
+            <p>
+                <img src="../resource/images/dog_load.gif" style="width: 50px;height: 50px">
+                <label style="width: 100px"  style="font-weight: 600;margin-left: 10px">测试名字</label>
+            </p>
+            <h4 style="font-weight: 700">测试标题123456ssswww</h4>
+            <p style="cursor: pointer;color: #77839C">1,566人赞同了该回答</p>
+            <p><content_template></content_template></p>
+            <p><a style="color: #77839C;font-size: 15px" href="javascript:void(0)">编辑于2018-02-24</a></p>
+            <p style="color: #77839C">
+                <button class="btn btn-sm" style="background-color: #D9EDFF"><i class="fa fa-caret-up" style="color: #0084FF">&nbsp;&nbsp;1187</i></button>
+                <button class="btn btn-sm" style="background-color: #D9EDFF"><i class="fa fa-caret-down" style="color: #0084FF"></i></button>
+                <i class="fa fa-comment" style="cursor: pointer;margin-right: 5px;margin-left: 20px">&nbsp;&nbsp;1183条评论</i>
+                <i class="fa fa-send" style="cursor: pointer;margin-right: 5px;margin-left: 20px">&nbsp;&nbsp;分享</i>
+                <i class="fa fa-star" style="cursor: pointer;margin-right: 5px;margin-left: 20px">&nbsp;&nbsp;收藏</i>
+                <i class="fa fa-heart" style="cursor: pointer;margin-right: 5px;margin-left: 20px">&nbsp;&nbsp;感谢</i>
+                <i class="fa fa-yelp" style="cursor: pointer;margin-right: 5px;margin-left: 20px">&nbsp;&nbsp;举报</i>
+            </p>
+        </div>
+    </div>
+</div>
+<script src="../resource/js/jquery.js"></script>
+<script src="../resource/js/bootstrap.min.js"></script>
+<script src="../resource/js/sweetalert2.js"></script>
+<script src="../resource/js/vue.min.js"></script>
+<script>
+    var content_data={
+        head_img:'<div style="font-size: 15px">网易MuMu(安卓模拟器),是网易官方推出的精品游戏服务平台,安装后可在电脑上运行各类游戏与应用,具备全面兼容、操作流畅、智能辅助等特点,每天还会为您推荐火热的应用.</div>'
+    };
+    Vue.component('content_template',{
+        template:content_data.head_img
+    });
+    var content_el=new Vue({
+        el:"#blog_test",
+        data:content_data
+    });
+    swal({
+        type:"success",
+        text:"shishi",
+        timer:3000
+    });
+    var $jq_test=$("#jq_test");
+    $(function () {
+        var $tr=$("tr");
+        $tr.click(function () {
+            if($tr.attr("class")===undefined||$tr.attr("class")===""){
+                $tr.addClass("danger");
+            }else{
+                $tr.removeClass("danger")
+            }
+
+        });
+        $("label").click(function () {
+            if($("label").attr("class")===undefined||$("label").attr("class")===""){
+                $("label").addClass("danger");
+            }else{
+                $("label").removeClass("danger")
+            }
+
+        })
+    })
+    /*$(document).ready(function () {
+        //$('#myModal').modal('show')
+    });*/
+
+</script>
+</body>
+</html>

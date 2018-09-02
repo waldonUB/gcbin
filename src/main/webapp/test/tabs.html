@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resource/css/font-awesome.min.css">
+    <script src="../resource/js/vue.js"></script>
+</head>
+<body>
+<div id="test_el">
+    <table class="table table-bordered">
+        <tr>
+            <th :colspan="sub_row.length" class="text-center">主页</th>
+            <th rowspan="2" class="text-center" style="vertical-align: middle">主页</th>
+            <th class="text-center">主页</th>
+        </tr>
+        <tr v-for="statement,index in sub_row">
+            <td v-for="statement,index in sub_row" class="text-center">搜索</td>
+        </tr>
+    </table>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#">主页 <i class="fa fa-home"></i></a></li>
+        <li role="presentation"><a href="#">搜索 <i class="fa fa-search"></i></a></li>
+        <li role="presentation"><a href="#">微信 <i class="fa fa-wechat"></i></a></li>
+        <li role="presentation">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                安卓 <i class="fa fa-android"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </li>
+
+    </ul>
+    <img src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIom2FuNABocXRY1lUcjWYbSRWrkNAGsnH8SJZaD2w7NuJm6CQPnMA9U4BotMUV6BeTxyC7xTJO4w/132" alt="">
+</div>
+<script src="../resource/js/jquery.js"></script>
+<script src="../resource/js/bootstrap.min.js"></script>
+<script src="../resource/js/sweetalert2.js"></script>
+<script>
+    var dataModel={
+        row_num:3,//跨行数
+        sub_row:[1,2,3,4]//第二行表头数据
+    };
+    var testVue=new Vue({
+        el:"#test_el",
+        data:dataModel
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间：对应接口的包名+类名 -->
+<mapper namespace="cn.wdq.mapping.IndexDAO">
+    <!--id是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <select id="query_last" resultType="com.alibaba.fastjson.JSONObject">
+        select user_name,head_img,last_time from login_info  group by user_name  order by last_time desc limit 0,4
+    </select>
+    <!--查询登录时间段-->
+    <select id="query_time" resultType="com.alibaba.fastjson.JSONObject">
+        select sum(case when MONTH(last_time)=1 then 1 end) as mon1,
+            sum(case when MONTH(last_time)=2 then 1 end) as mon2,
+            sum(case when MONTH(last_time)=3 then 1 end) as mon3,
+            sum(case when MONTH(last_time)=4 then 1 end) as mon4,
+            sum(case when MONTH(last_time)=5 then 1 end) as mon5,
+            sum(case when MONTH(last_time)=6 then 1 end) as mon6,
+            sum(case when MONTH(last_time)=7 then 1 end) as mon7,
+            sum(case when MONTH(last_time)=8 then 1 end) as mon8,
+            sum(case when MONTH(last_time)=9 then 1 end) as mon9,
+            sum(case when MONTH(last_time)=10 then 1 end) as mon10,
+            sum(case when MONTH(last_time)=11 then 1 end) as mon11,
+            sum(case when MONTH(last_time)=12 then 1 end) as mon12
+        from sm_user
+    </select>
+    <!--查询全国用户地区分布-->
+    <select id="query_map" resultType="com.alibaba.fastjson.JSONObject">
+        select count(1) as map_num,district from sm_user where district is not null group by district
+    </select>
+</mapper>

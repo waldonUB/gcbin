@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../resource/css/sweetalert2.css">
+</head>
+<body>
+
+<div id="n1">
+    <p id="n2" class="demo test" data-key="UUID" data-value="1235456465">CodePlayer</p>
+    <input id="n3" name="order_id" type="text" checked="checked" value="1" data-toggle="555">
+    <input id="n4" name="order_id" type="checkbox" checked="checked" value="2">
+    <input id="file" type="file">
+    <a href="#">点击test</a>
+    <button>点击test</button>
+    <button data-toggle="tooltip" data-placement="top" title="Tooltip on top"  value="点击">点击</button>
+</div>
+<script src="../resource/js/jquery.js"></script>
+<script src="../resource/js/bootstrap.js"></script>
+<script src="../resource/js/hap.js"></script>
+<script src="../resource/js/sweetalert2.js"></script>
+<script>
+    var test_Math=Math.abs(~2020);
+
+    $(document).ready(function () {
+        //file
+        swal({
+            title:"请先登录系统",
+            imageUrl:"resource/images/dog_load.gif",
+            showConfirmButton: true,
+            showCancelButton:true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        }).then(function () {
+            alert(666)
+        });
+        var $file=$("#file");
+        $n3.keyup();
+        $(function(){
+            $file.on("change",function () {
+                var $file = $(this);
+                var fileObj = $file[0];
+
+                var windowURL = window.URL || window.webkitURL;
+                var dataURL;
+                var $head_img = $("#head_img");
+
+                if (fileObj && fileObj.files && fileObj.files[0]) {
+                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                    $head_img.attr('src', dataURL);
+                    var img=new Image();
+                    img.src=dataURL;//这里是blob的数据
+                    img.onload=function () {
+                        var that=this;
+                        var w=that.width;
+                        var h=that.height;
+                        var scale=w/h;
+                        //生成canvas
+                        var canvas=document.createElement('canvas');
+                        var ctx=canvas.getContext('2d');
+                        ctx.fillStyle='rgba(255,255,255,0)';
+                        $(canvas).attr({
+                            width:w,
+                            height:h
+                        });
+                        ctx.drawImage(that,0,0,w,h);
+                        var filename='my_file.jpg';
+                        var att='jpeg';//写死了，再改动
+                        var base64 = canvas.toDataURL('image/' + att,0.8);
+                        //var base_64_2=that.base64Encode(canvas);
+                        // 生成结果
+                        var result = {
+                            filename:filename,
+                            base64 : base64,
+                            clearBase64 : base64.substr(base64.indexOf(',') + 1)
+                        };
+                    }
+                } else {
+                    dataURL = $file.val();
+                    var imgObj = document.getElementById("preview");
+                    imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                    imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+
+                }
+            });
+        });
+    });
+
+    var i=1;
+    var j=3;
+    var num=i/j;
+    var $p_write=$("#n2");
+    var $n3=$("#n3");
+    var $img=$("#n5");
+    var array=[1,2,3];
+    var array2=[4,5,6];
+    var array_grep=[1,2,3,4,5,6,7,8,9,10];
+    var $p=$("p");
+    var myDate=new Date();
+    var year=myDate.getFullYear();
+    var month=myDate.getMonth();
+    var day=myDate.getDay();
+    var hours=myDate.getHours();
+    var minutes=myDate.getMinutes();
+    var seconds=myDate.getSeconds();
+    var obj_extended=["第一个","第二个"];
+    var obj_array={0:"wdq",1:"man",2:true};
+    var obj_array2={"name":"wdq","sex":"男"};
+    var attr_obj=$p_write.attr("data-value");
+    $p_write.addClass("six");
+    var prop_obj=$p_write.prop("class");
+    console.log("attr属性:"+attr_obj);
+    console.log("prop属性:"+prop_obj);
+    console.log("text内容："+$n3.attr("value"));
+    var obj=$.extend(array,array2);
+    var $make_array=$.makeArray(obj_array);
+    var $make_array2=$.makeArray(obj_array2.name);
+    console.log("生成后的数组："+$make_array);
+    console.log("生成后的数组2："+$make_array2);
+    console.log(array);
+    $p.data("name","wdq","222");
+    console.log($p_write.data("name"));
+    $p.removeData();
+    console.log($p_write.data("name"));
+    //click
+    var $click=$(":button,a");
+    $click.click(function () {
+        alert("date0123")
+    })
+    //$.extend
+    var extend_x={name:"吴德钦"};
+    var extend_y={age:18};
+    var extend_z={site:"www.baidu.com"};
+    var $extend_all=$.extend(extend_x,extend_y,extend_z);
+    var $extend_arr=$.extend(obj_extended,obj_array,obj_array2);
+    var $map_x={name:"Stanley",map:{a:1,b:"ss"}};
+    var $map_y={map:{b:"www",c:233}};
+    var $map_all=$.extend($map_x,$map_y);
+    console.log("$extend_all的值："+$extend_all.name);
+    console.log("$extend_x的值："+extend_x.age);
+    console.log("$extend_arr的值："+$extend_arr.sex);
+    console.log("$map_all的值："+$map_all.map.b);//map.a的值会被覆盖
+    //getcontextpath
+    function getcontextpath() {
+        var name="contextPath=/ssc";
+        for(var i=0;i<name.length;i++){
+            var c=name[i];
+            if(name.indexOf("contextPath")===0){
+                return c.substring(name.length,c.length)
+            }
+        }
+        //return "";
+    }
+
+
+    /*$n3.change(function () {
+        alert("666")
+    });*/
+    $n3.keyup(function () {
+        console.log("$n3的keyup方法：");
+        console.log($n3.attr("value"));
+        console.log($n3.prop("value"))
+        /*swal(
+        {
+            html: '请输入新密码<input type="text" id="newpwd" class="swal2-input" placeholder="请输入新密码" value="">',
+            type: "info",
+            showCancelButton: true
+        }).then(
+            function(inputValue){
+                var $pwd=$("#newpwd");
+                console.log($pwd.val())
+            });*/
+        }
+        );
+    function handler  () {
+        alert("changed");
+    }
+    function  handler2() {
+        alert("changed2")
+    }
+    function my_ft(value,index) {
+        return index>5
+    }
+    $.ajax({
+        url:'',
+        success:function () {
+
+        }
+    });
+    /*$(":button").click(function () {
+        $(":button").toggle(function () {
+            $(this).css("color","red");
+        },function () {
+            $(this).css("color","blue");
+        },handler2())
+    });
+    $(":button").hover(function () {
+        $(this).css("color","red");
+    },function () {
+        $(this).css("color","blue");
+    });
+    $(":button").click(function (event) {
+        console.log(new Date(event.timeStamp).toLocaleDateString())
+    });*/
+    var res_each=$.each(array,function (i,item) {
+        return 6;
+    });
+    var res=$.map(array,function (i,item) {
+        return 5;
+    });
+    var obj_grep=$.grep(array_grep,my_ft,true);
+    console.log(obj_grep);
+    console.log(res);
+    console.log(res_each);
+
+    //数字验证
+    var num=15;
+    console.log("数字num:"+isNaN(num));
+</script>
+</body>
+</html>

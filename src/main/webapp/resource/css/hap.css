@@ -1,0 +1,117 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+/**解决vue延迟加载闪烁*/
+[v-cloak] {
+    display: none;
+}
+/**导航栏logo*/
+.nav-logo{
+    font-size: 40px;color: #D20A0A;margin-top: 7px;
+}
+/**导航栏字*/
+.nav-font{
+    font-size: 30px;font-weight: lighter;color: #565A5F;font-family: Arial;margin-top: 5px;
+}
+/**普通显示字体*/
+.general-font{
+    font-size: 13px;
+    color: #777;
+    font-weight: 500;
+}
+/**导航栏节点开始*/
+.tree{
+
+}
+.tree li{
+    position:relative;
+}
+.tree ul{
+    width: 159px;
+    position: absolute;
+    background-color: #FFFFFF;
+    padding-left: 0;
+    border: 1px solid #eeeeee;
+    border-radius: 0 5px 5px 0;
+}
+.tree ul li{
+    width: 159px;
+    position:relative;
+    list-style: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+.tree ul li a{
+    color: #777;
+    padding:0 20px 0 20px;
+    width: 100%;
+}
+.tree li>ul{
+    left: 158px;
+    top:0;
+    display: none;
+}
+.tree li:hover{
+    background-color: #E1E3E9;
+}
+.tree li:hover>ul{
+    display: block;
+}
+/**导航栏节点结束*/
+
+/**注册卡片列表input框的label*/
+.in-label{
+    width:55px;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #66625F;
+}
+/**用户列表字体*/
+.col a,.user a{
+    color: grey;
+    font-family:sans-serif;
+    font-size: 13px;
+    padding: 6px !important;
+    margin-right: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.col a.active,.user a.active {
+    font-family:sans-serif;
+    font-size: 13px;
+    color: white;
+    background-color: #00b5f5;
+    padding: 6px !important;
+    margin-right: 14px;
+    border-radius: 5px;
+}
+th,td{
+    font-size: 13px;
+    text-align: center;
+}
+@media screen and (min-width: 768px){
+    .content{
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .blog-content{
+        margin: 0 0 0 0;
+    }
+    .blog-fun{
+        position: relative;
+    }
+}
+@media screen and (min-width: 1200px){
+    .blog-content{
+        margin:0 0 5px 30px;padding-right: 0;
+    }
+    .blog-fun{
+        margin-right: 75px;
+    }
+}
