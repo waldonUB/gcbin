@@ -1,5 +1,5 @@
 ## Community
-一个用SSM框架+Vue.js和MySQL做的javaweb网站（[点击跳转到服务器](http://47.106.190.36:8080/PetsCT/)，可以直接登录预览效果）
+一个用SSM框架+Vue.js和MySQL做的javaweb网站（[点击跳转到服务器](http://47.106.190.36:8080/gcbin/)，可以直接登录预览效果）
 
 ###简介：
 1 JDK1.8 <br>
