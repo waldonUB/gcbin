@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../resource/js/vue.js"></script>
+</head>
+<body>
+<div id="search1">
+    <vue-search></vue-search>
+</div>
+
+<script src="js/vue-search.js"></script>
+<script>
+    var searchVue=new Vue({
+        el:"#search1",
+        methods:{
+            init: function () {
+                console.log("searchVue")
+            }
+        }
+    });
+</script>
+</body>
+</html>
