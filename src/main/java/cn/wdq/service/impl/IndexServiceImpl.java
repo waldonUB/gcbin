@@ -1,6 +1,7 @@
-package cn.wdq.service;
+package cn.wdq.service.impl;
 
 import cn.wdq.dao.IndexDAOImpl;
+import cn.wdq.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

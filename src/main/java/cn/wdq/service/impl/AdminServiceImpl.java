@@ -1,9 +1,10 @@
-package cn.wdq.service;
+package cn.wdq.service.impl;
 
 import cn.wdq.dao.AdminDAOImpl;
 import cn.wdq.dao.ResDAOImpl;
 import cn.wdq.dao.UIDImpl;
 import cn.wdq.entities.ResourceModel;
+import cn.wdq.service.AdminService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

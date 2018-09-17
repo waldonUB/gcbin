@@ -1,24 +1,18 @@
-package cn.wdq.service;
+package cn.wdq.service.impl;
 
 import cn.wdq.dao.UIDImpl;
 import cn.wdq.entities.UserInfo;
+import cn.wdq.service.LoginService;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
-public class LoginServiceImpl implements LoginService{
+public class LoginServiceImpl implements LoginService {
 	Logger logger=Logger.getLogger(LoginServiceImpl.class);
 	@Autowired
 	UIDImpl uIDImpl;

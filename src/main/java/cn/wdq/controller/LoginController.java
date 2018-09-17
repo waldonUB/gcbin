@@ -364,13 +364,4 @@ static{
         }
         return model;
     }
-    @RequestMapping("/testPost")
-    @ResponseBody
-    public ReturnModel testPost(@RequestBody JSONArray list){
-        System.out.println("testPost的List："+list);
-        logger.error("testPost的接收的数据："+list);
-        ReturnModel model = new ReturnModel();
-        model.setSuccess(true);
-        return model;
-    }
 }
