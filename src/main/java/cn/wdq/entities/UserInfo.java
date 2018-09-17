@@ -32,6 +32,8 @@ public class UserInfo implements Serializable {
     private String ip;
     /**ip归属地*/
     private String ip_area;
+    /**用户组*/
+    private String group_code;
 
     public String getCuserid() {
         return cuserid;
@@ -127,6 +129,14 @@ public class UserInfo implements Serializable {
 
     public void setIp_area(String ip_area) {
         this.ip_area = ip_area;
+    }
+
+    public String getGroup_code() {
+        return group_code;
+    }
+
+    public void setGroup_code(String group_code) {
+        this.group_code = group_code;
     }
 }
 
