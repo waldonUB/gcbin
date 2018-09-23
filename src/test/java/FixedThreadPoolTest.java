@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class FixedThreadPoolTest {
     private static long begin = System.currentTimeMillis();
     public static void main(String[] args) {
-        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(8);
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4);
         int count = 10000;
         for (int i = 0; i < count; i++) {
             int index = i;

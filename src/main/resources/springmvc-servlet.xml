@@ -112,6 +112,9 @@
     <bean id="commonDAOImpl" class="cn.wdq.dao.CommonDAOImpl">
         <property name="sqlSession" ref="sqlSession"></property>
     </bean>
+    <bean id="permissionDAOImpl" class="cn.wdq.dao.PermissionDAOImpl">
+        <property name="sqlSession" ref="sqlSession"></property>
+    </bean>
     <!--自动扫描映射接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定sql会话工厂，在上面配置过的-->
