@@ -4,6 +4,7 @@ import com.sun.deploy.net.URLEncoder;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.entity.StringEntity;
@@ -21,13 +22,16 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class HttpAsyncClient {
     private final static int socketTimeout = 50000; // 等待数据超时时间
     private final static int connectTimeout = 50000; // 连接超时时间
     private final static int connectionRequestTimeout = 1000000; // 连接池连接超时,超时将取消传输
     private final static int poolSize = 1000; // 连接池最大连接数
-    private final static int maxPerRoute = 500; // 每个主机最大并发为1500
+    private final static int maxPerRoute = 10000; // 每个主机最大并发为1500
 
     private static long begin = System.currentTimeMillis();
     private static Logger logger = Logger.getLogger(HttpAsyncClient.class);
@@ -55,6 +59,7 @@ public class HttpAsyncClient {
         httpclient.start();
         HttpPost request = new HttpPost("http://47.106.190.36:8080/gcbin/edit_password");
         request.setHeader("Content-Type", "application/json");
+        final CountDownLatch downLatch = new CountDownLatch(count);
         for (int i = 0; i < count; i++) {
             JSONObject json = new JSONObject();
             json.put("user_name", "waldon1");
@@ -63,41 +68,35 @@ public class HttpAsyncClient {
             httpclient.execute(request, new FutureCallback<HttpResponse>() {
                 @Override
                 public void completed(HttpResponse response) {
+                    downLatch.countDown();
                     System.out.println();
                     index++;
-                    logger.info("当前数值："+index);
                     try {
                         HttpEntity entity = response.getEntity();
                         String result = EntityUtils.toString(entity, "utf-8");
-                        System.out.println(result);
-                        System.out.println();
-                        if (index == (count-1)) {
-                            httpclient.close();
-                        }
+                        System.out.println("当前"+downLatch.getCount()+"耗时:"+(System.currentTimeMillis()-begin) + "-" + result);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("当前"+index+"耗时:"+(System.currentTimeMillis()-begin));
                 }
 
                 @Override
                 public void failed(Exception ex) {
-                    try {
-                        httpclient.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    downLatch.countDown();
                 }
 
                 @Override
                 public void cancelled() {
-                    try {
-                        httpclient.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    downLatch.countDown();
                 }
             });
+        }
+        try {
+            downLatch.await(100, TimeUnit.SECONDS);
+            System.out.println("耗时:"+(System.currentTimeMillis()-begin) + "执行关闭httpclient操作");
+            httpclient.close();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
     @Test
@@ -115,5 +114,59 @@ public class HttpAsyncClient {
         json.put("username", "wudq");
         System.out.println(map.toString());
         System.out.println(json.toJSONString());
+    }
+    @Test
+    public void moreRequest(){
+        final RequestConfig requestConfitg = RequestConfig.custom()
+                .setSocketTimeout(3000)
+                .setConnectTimeout(3000).build();
+
+        final CloseableHttpAsyncClient httpClient = HttpAsyncClients.custom()
+                .setDefaultRequestConfig(requestConfitg)
+                .build();
+
+        httpClient.start();
+
+        final HttpGet[] requests = new HttpGet[]{
+                new HttpGet("http://www.apache.org/"),
+                new HttpGet("http://www.baidu.com/"),
+                new HttpGet("http://www.oschina.net/")
+        };
+
+        final CountDownLatch latch = new CountDownLatch(requests.length);
+        for(final HttpGet request: requests){
+
+            httpClient.execute(request, new FutureCallback(){
+                @Override
+                public void completed(Object obj) {
+                    final HttpResponse response = (HttpResponse)obj;
+                    latch.countDown();
+                    System.out.println(request.getRequestLine() + "->" + response.getStatusLine());
+                }
+
+                @Override
+                public void failed(Exception excptn) {
+                    latch.countDown();
+                    System.out.println(request.getRequestLine() + "->" + excptn);
+                }
+
+                @Override
+                public void cancelled() {
+                    latch.countDown();
+                    System.out.println(request.getRequestLine() + "cancelled");
+                }
+            });
+        }
+        try {
+            latch.await();
+            System.out.println("Shutting Down");
+        } catch (InterruptedException ex) {
+        }finally{
+            try {
+                httpClient.close();
+            } catch (IOException ex) {
+            }
+        }
+        System.out.println("Finish!");
     }
 }

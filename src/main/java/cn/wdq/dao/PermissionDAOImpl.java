@@ -1,6 +1,7 @@
 package cn.wdq.dao;
 
 import cn.wdq.entities.GroupPermission;
+import cn.wdq.entities.GroupUser;
 import cn.wdq.mapping.PermissionDAO;
 import org.apache.ibatis.session.SqlSession;
 
@@ -25,6 +26,21 @@ public class PermissionDAOImpl implements PermissionDAO {
 
     @Override
     public int deletePermission(GroupPermission groupPermission) {
+        return 0;
+    }
+
+    @Override
+    public List<GroupUser> getGroupList() {
+        return sqlSession.selectList("cn.wdq.mapping.PermissionDAO.getGroupList");
+    }
+
+    @Override
+    public int saveGroup(GroupUser groupUser) {
+        return sqlSession.insert("cn.wdq.mapping.PermissionDAO.saveGroup" ,groupUser);
+    }
+
+    @Override
+    public int deleteGroup(GroupUser groupUser) {
         return 0;
     }
 }

@@ -5,12 +5,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolTest extends ThreadPoolExecutor {
     private static int number = 0;
+    private static int count = 20;
     public ThreadPoolTest(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
     }
 
     public static void main(String[] args) {
-        int count = 20;
         ThreadPoolExecutor executor = new ThreadPoolExecutor(3, 7, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<>(10));
         long begin = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
