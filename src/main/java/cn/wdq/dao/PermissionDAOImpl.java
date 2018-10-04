@@ -3,6 +3,7 @@ package cn.wdq.dao;
 import cn.wdq.entities.GroupPermission;
 import cn.wdq.entities.GroupUser;
 import cn.wdq.mapping.PermissionDAO;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class PermissionDAOImpl implements PermissionDAO {
     }
 
     @Override
-    public List<GroupPermission> getPermissionList() {
-        return null;
+    public List<GroupPermission> getPermissionList(JSONObject json) {
+        return sqlSession.selectList("cn.wdq.mapping.PermissionDAO.getPermissionList", json);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class PermissionDAOImpl implements PermissionDAO {
 
     @Override
     public int deletePermission(GroupPermission groupPermission) {
-        return 0;
+        return sqlSession.delete("cn.wdq.mapping.PermissionDAO.deletePermission", groupPermission);
     }
 
     @Override
@@ -41,6 +42,6 @@ public class PermissionDAOImpl implements PermissionDAO {
 
     @Override
     public int deleteGroup(GroupUser groupUser) {
-        return 0;
+        return sqlSession.delete("cn.wdq.mapping.PermissionDAO.deleteGroup" ,groupUser);
     }
 }

@@ -6,9 +6,9 @@ public class GroupPermission {
     /**用户组主键*/
     private int pk_group;
     /**用户组编码*/
-    private String group_code;
+    private String groupCode;
     /**用户组名称*/
-    private String group_name;
+    private String groupName;
     /**权限树主键*/
     private String pk_resource;
 
@@ -28,20 +28,20 @@ public class GroupPermission {
         this.pk_group = pk_group;
     }
 
-    public String getGroup_code() {
-        return group_code;
+    public String getGroupCode() {
+        return groupCode;
     }
 
-    public void setGroup_code(String group_code) {
-        this.group_code = group_code;
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
     }
 
-    public String getGroup_name() {
-        return group_name;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroup_name(String group_name) {
-        this.group_name = group_name;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getPk_resource() {

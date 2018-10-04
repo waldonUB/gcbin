@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/permission")
 public class PermissionController {
@@ -27,19 +29,24 @@ public class PermissionController {
     @ResponseBody
     public ReturnModel queryPermission (@RequestBody JSONObject json) {
         ReturnModel model = new ReturnModel();
+        List<GroupPermission> list = userPermission.getPermissionList(json);
+        model.setSuccess(true);
+        model.setData(list);
         return model;
     }
 
     /**
      * 保存该用户组所拥有的权限
-     * @param groupPermission 1.group_code 用户所属的用户组编码
+     * @param groupPermissions 1.group_code 用户所属的用户组编码
      * */
     @RequestMapping("/savePermission")
     @ResponseBody
-    public ReturnModel savePermission (@RequestBody GroupPermission groupPermission) {
+    public ReturnModel savePermission (@RequestBody GroupPermission[] groupPermissions) {
         ReturnModel model = new ReturnModel();
         try {
-            userPermission.savePermission(groupPermission);
+            for (GroupPermission groupPermission : groupPermissions) {
+                userPermission.savePermission(groupPermission);
+            }
             model.setSuccess(true);
             return model;
         } catch (Exception e) {
@@ -76,6 +83,9 @@ public class PermissionController {
     @ResponseBody
     public ReturnModel queryGroup (@RequestBody JSONObject json) {
         ReturnModel model = new ReturnModel();
+        List<GroupUser> list = userPermission.getGroupList();
+        model.setSuccess(true);
+        model.setData(list);
         return model;
     }
 

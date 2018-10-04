@@ -4,6 +4,7 @@ import cn.wdq.dao.PermissionDAOImpl;
 import cn.wdq.entities.GroupPermission;
 import cn.wdq.entities.GroupUser;
 import cn.wdq.service.UserPermission;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class UserPermissionImpl implements UserPermission {
     @Autowired
     PermissionDAOImpl permissionDAO;
     @Override
-    public List<GroupPermission> getPermissionList() {
-        return null;
+    public List<GroupPermission> getPermissionList(JSONObject json) {
+        return permissionDAO.getPermissionList(json);
     }
 
     @Override
@@ -27,12 +28,12 @@ public class UserPermissionImpl implements UserPermission {
 
     @Override
     public int deletePermission(GroupPermission groupPermission) {
-        return 0;
+        return permissionDAO.deletePermission(groupPermission);
     }
 
     @Override
     public List<GroupUser> getGroupList() {
-        return null;
+        return permissionDAO.getGroupList();
     }
 
     @Override
@@ -42,6 +43,6 @@ public class UserPermissionImpl implements UserPermission {
 
     @Override
     public int deleteGroup(GroupUser groupUser) {
-        return 0;
+        return permissionDAO.deleteGroup(groupUser);
     }
 }

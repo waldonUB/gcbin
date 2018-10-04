@@ -3,16 +3,20 @@
 <mapper namespace="cn.wdq.mapping.PermissionDAO">
     <insert id="savePermission" parameterType="cn.wdq.entities.GroupPermission" useGeneratedKeys="true" keyProperty="pk_group">
       insert into group_permission(pk_permission, pk_group, group_code, group_name, pk_resource)
-      values (#{pk_permission}, #{pk_group}, #{group_code}, #{group_name}, #{pk_resource})
+      values (#{pk_permission}, #{pk_group}, #{groupCode}, #{groupName}, #{pk_resource})
     </insert>
-    <select id="getPermissionList" resultType="cn.wdq.entities.GroupPermission">
-        select * from group_permission
+    <select id="getPermissionList" resultType="cn.wdq.entities.GroupPermission" parameterType="com.alibaba.fastjson.JSONObject">
+        select pk_permission, pk_group, group_code as groupCode, group_name as groupName, pk_resource from group_permission
+        where pk_group = #{pk_group}
     </select>
+    <delete id="deletePermission" parameterType="cn.wdq.entities.GroupPermission">
+        delete from group_permission where pk_permission = #{pk_permission}
+    </delete>
     <insert id="saveGroup" parameterType="cn.wdq.entities.GroupUser" useGeneratedKeys="true" keyProperty="pk_group">
       insert into group_user(pk_group, group_code, group_name) values (#{pk_group}, #{groupCode}, #{groupName})
     </insert>
     <select id="getGroupList" resultType="cn.wdq.entities.GroupUser">
-        select * from group_user
+        select pk_group, group_code as groupCode, group_name as groupName from group_user
     </select>
     <delete id="deleteGroup" parameterType="cn.wdq.entities.GroupUser">
         delete from group_user where pk_group = #{pk_group}
