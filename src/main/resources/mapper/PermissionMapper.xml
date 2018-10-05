@@ -9,8 +9,14 @@
         select pk_permission, pk_group, group_code as groupCode, group_name as groupName, pk_resource from group_permission
         where pk_group = #{pk_group}
     </select>
+    <select id="queryPermissionTree" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
+        select resource_model.* from resource_model
+          inner join group_permission on resource_model.pk_resource = group_permission.pk_resource
+          where group_permission.group_code = #{groupCode}
+          order by funcode
+    </select>
     <delete id="deletePermission" parameterType="cn.wdq.entities.GroupPermission">
-        delete from group_permission where pk_permission = #{pk_permission}
+        delete from group_permission where group_code = #{groupCode}
     </delete>
     <insert id="saveGroup" parameterType="cn.wdq.entities.GroupUser" useGeneratedKeys="true" keyProperty="pk_group">
       insert into group_user(pk_group, group_code, group_name) values (#{pk_group}, #{groupCode}, #{groupName})
@@ -21,4 +27,10 @@
     <delete id="deleteGroup" parameterType="cn.wdq.entities.GroupUser">
         delete from group_user where pk_group = #{pk_group}
     </delete>
+    <select id="queryUsers" resultType="cn.wdq.entities.UserInfo">
+        select cuserid, user_name from sm_user
+    </select>
+    <update id="addGroupUser" parameterType="com.alibaba.fastjson.JSONObject">
+        update sm_user set group_code = #{groupCode} where cuserid = #{cuserid}
+    </update>
 </mapper>

@@ -1,6 +1,7 @@
 package cn.wdq.mapping;
 
 import cn.wdq.entities.ResourceModel;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
 

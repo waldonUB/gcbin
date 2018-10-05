@@ -49,7 +49,7 @@ var topDatas={
     logo:"../../resource/images/one_piece.jpg",
     currentInfo:{},
     userInfo:[],
-    treeInfo:[],//根据tree生成的导航栏信息
+    treeInfo:[],
     update_pwd:false,
     base64:'',
     nav_node:'',
@@ -151,6 +151,7 @@ Vue.component("top",{
                         Vue.set(topDatas, "head_image", "../../resource/images/user_head_test.jpg");
                     }
                     that.is_admin();
+                    that.queryPermissionTree(); // 获取完用户信息再生成导航栏
                 },
                 error:function (result) {
                     location.href='/gcbin';
@@ -350,15 +351,13 @@ Vue.component("top",{
          * 获取Ztree的信息，并在导航栏自动生成
          * */
         query_tree_nav:function () {
-            var that=this;
             $.ajax({
                 url:'/gcbin/query_tree',
-                data:JSON.stringify({"username":"test"}),
                 type:"POST",
                 contentType: "application/json;charset=utf-8",
                 success:function (result) {
                     topDatas.treeInfo=result.data;
-                    that.initRoot(result.data);
+                    // that.initRoot(result.data);
                     // for(var i=0;i<topDatas.treeInfo.length;i++){
                     //     if(topDatas.treeInfo[i].pk_parent===0){
                     //         topDatas.root_info.push(topDatas.treeInfo[i]);
@@ -372,6 +371,21 @@ Vue.component("top",{
                     //         }
                     //     }
                     // }
+                }
+            })
+        },
+        /**
+         * 获取当前用户的权限树导航栏
+         * */
+        queryPermissionTree () {
+            const vm = this
+            $.ajax({
+                url:'/gcbin/permission/queryPermissionTree',
+                data:JSON.stringify({"groupCode": topDatas.userInfo.group_code}),
+                type:"POST",
+                contentType: "application/json;charset=utf-8",
+                success:function (result) {
+                    vm.initRoot(result.data); // 根据权限tree生成的导航栏信息
                 }
             })
         },

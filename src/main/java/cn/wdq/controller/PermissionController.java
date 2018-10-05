@@ -3,6 +3,7 @@ package cn.wdq.controller;
 import cn.wdq.entities.GroupPermission;
 import cn.wdq.entities.GroupUser;
 import cn.wdq.entities.ReturnModel;
+import cn.wdq.entities.UserInfo;
 import cn.wdq.service.UserPermission;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/permission")
@@ -36,6 +38,20 @@ public class PermissionController {
     }
 
     /**
+     * 根据用户拥有的节点权限生成导航栏节点
+     * @param json 1.group_code 用户所属的用户组编码
+     * */
+    @RequestMapping("/queryPermissionTree")
+    @ResponseBody
+    public ReturnModel queryPermissionTree (@RequestBody JSONObject json) {
+        ReturnModel model = new ReturnModel();
+        List<Map<String, Object>> list = userPermission.queryPermissionTree(json);
+        model.setSuccess(true);
+        model.setData(list);
+        return model;
+    }
+
+    /**
      * 保存该用户组所拥有的权限
      * @param groupPermissions 1.group_code 用户所属的用户组编码
      * */
@@ -44,6 +60,7 @@ public class PermissionController {
     public ReturnModel savePermission (@RequestBody GroupPermission[] groupPermissions) {
         ReturnModel model = new ReturnModel();
         try {
+            userPermission.deletePermission(groupPermissions[0]); // TODO 存在未勾选任何节点的情况
             for (GroupPermission groupPermission : groupPermissions) {
                 userPermission.savePermission(groupPermission);
             }
@@ -57,25 +74,6 @@ public class PermissionController {
         }
     }
 
-    /**
-     * 删除该用户组所拥有的权限
-     * @param groupPermission 1.group_code 用户所属的用户组编码
-     * */
-    @RequestMapping("/deletePermission")
-    @ResponseBody
-    public ReturnModel deletePermission (@RequestBody GroupPermission groupPermission) {
-        ReturnModel model = new ReturnModel();
-        try {
-            userPermission.deletePermission(groupPermission);
-            model.setSuccess(true);
-            return model;
-        } catch (Exception e) {
-            logger.error("删除用户组权限异常", e);
-            model.setSuccess(false);
-            model.setMessage("删除用户组权限异常");
-            return model;
-        }
-    }
     /**
      * 查询用户组
      * */
@@ -107,6 +105,31 @@ public class PermissionController {
     @ResponseBody
     public ReturnModel deleteGroup (@RequestBody GroupUser groupUser) {
         ReturnModel model = new ReturnModel();
+        return model;
+    }
+
+    /**
+     * 查询系统所有用户
+     * */
+    @RequestMapping("/queryUsers")
+    @ResponseBody
+    public ReturnModel queryUsers () {
+        ReturnModel model = new ReturnModel();
+        List<UserInfo> list = userPermission.queryUsers();
+        model.setData(list);
+        model.setSuccess(true);
+        return model;
+    }
+
+    /**
+     * 添加用户到用户组
+     * */
+    @RequestMapping("/addGroupUser")
+    @ResponseBody
+    public ReturnModel addGroupUser (@RequestBody JSONObject json) {
+        ReturnModel model = new ReturnModel();
+        userPermission.addGroupUser(json);
+        model.setSuccess(true);
         return model;
     }
 }

@@ -2,6 +2,7 @@ package cn.wdq.dao;
 
 import cn.wdq.entities.ResourceModel;
 import cn.wdq.mapping.ResourceDAO;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;

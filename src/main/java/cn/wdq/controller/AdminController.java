@@ -195,12 +195,11 @@ public class AdminController {
     /**
      * 查询树形菜单
      *
-     * @param json null
      * @return 注册模块节点信息集合
      */
     @RequestMapping("/query_tree")
     @ResponseBody
-    public ReturnModel queryTree(@RequestBody JSONObject json) {
+    public ReturnModel queryTree() {
         ReturnModel model = new ReturnModel();
         try {
             List list_tree = admin.query_tree();

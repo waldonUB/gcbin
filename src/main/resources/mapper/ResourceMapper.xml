@@ -17,7 +17,7 @@
           </if>
     </select>
     <select id="query_tree" resultType="com.alibaba.fastjson.JSONObject">
-          SELECT * from resource_model order by funcode
+          select * from resource_model order by funcode
     </select>
     <delete id="delete_tree" parameterType="cn.wdq.entities.ResourceModel">
         delete from resource_model where pk_resource=#{pk_resource}
