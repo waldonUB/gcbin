@@ -61,4 +61,14 @@ public class PermissionDAOImpl implements PermissionDAO {
     public int addGroupUser(JSONObject json) {
         return sqlSession.update("cn.wdq.mapping.PermissionDAO.addGroupUser", json);
     }
+
+    @Override
+    public List<Map<String, Object>> queryGroupUsers(JSONObject json) {
+        return sqlSession.selectList("cn.wdq.mapping.PermissionDAO.queryGroupUsers", json);
+    }
+
+    @Override
+    public int deleteGroupUser(JSONObject json) {
+        return sqlSession.update("cn.wdq.mapping.PermissionDAO.deleteGroupUser", json);
+    }
 }

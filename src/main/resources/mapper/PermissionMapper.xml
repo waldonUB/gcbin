@@ -33,4 +33,12 @@
     <update id="addGroupUser" parameterType="com.alibaba.fastjson.JSONObject">
         update sm_user set group_code = #{groupCode} where cuserid = #{cuserid}
     </update>
+    <select id="queryGroupUsers" parameterType="com.alibaba.fastjson.JSONObject" resultType="com.alibaba.fastjson.JSONObject">
+        select cuserid, user_name as userName, t1.group_code from sm_user t1
+        left join group_user t2 on t1.group_code = t2.group_code
+        where t1.group_code = #{groupCode}
+    </select>
+    <update id="deleteGroupUser" parameterType="com.alibaba.fastjson.JSONObject">
+        update sm_user set group_code = null where cuserid = #{cuserid}
+    </update>
 </mapper>

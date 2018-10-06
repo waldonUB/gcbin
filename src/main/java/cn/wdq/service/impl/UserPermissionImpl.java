@@ -62,4 +62,14 @@ public class UserPermissionImpl implements UserPermission {
     public int addGroupUser(JSONObject json) {
         return permissionDAO.addGroupUser(json);
     }
+
+    @Override
+    public List<Map<String, Object>> queryGroupUsers(JSONObject json) {
+        return permissionDAO.queryGroupUsers(json);
+    }
+
+    @Override
+    public int deleteGroupUser(JSONObject json) {
+        return permissionDAO.deleteGroupUser(json);
+    }
 }

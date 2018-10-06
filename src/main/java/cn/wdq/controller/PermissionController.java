@@ -60,7 +60,7 @@ public class PermissionController {
     public ReturnModel savePermission (@RequestBody GroupPermission[] groupPermissions) {
         ReturnModel model = new ReturnModel();
         try {
-            userPermission.deletePermission(groupPermissions[0]); // TODO 存在未勾选任何节点的情况
+            userPermission.deletePermission(groupPermissions[0]);
             for (GroupPermission groupPermission : groupPermissions) {
                 userPermission.savePermission(groupPermission);
             }
@@ -129,6 +129,31 @@ public class PermissionController {
     public ReturnModel addGroupUser (@RequestBody JSONObject json) {
         ReturnModel model = new ReturnModel();
         userPermission.addGroupUser(json);
+        model.setSuccess(true);
+        return model;
+    }
+
+    /**
+     * 查询当前用户组用户
+     * */
+    @RequestMapping("/queryGroupUsers")
+    @ResponseBody
+    public ReturnModel queryGroupUsers (@RequestBody JSONObject json) {
+        ReturnModel model = new ReturnModel();
+        List<Map<String, Object>> list = userPermission.queryGroupUsers(json);
+        model.setData(list);
+        model.setSuccess(true);
+        return model;
+    }
+
+    /**
+     * 删除当前用户组用户
+     * */
+    @RequestMapping("/deleteGroupUser")
+    @ResponseBody
+    public ReturnModel deleteGroupUser (@RequestBody JSONObject json) {
+        ReturnModel model = new ReturnModel();
+        userPermission.deleteGroupUser(json);
         model.setSuccess(true);
         return model;
     }

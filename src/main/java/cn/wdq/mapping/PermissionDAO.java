@@ -18,4 +18,6 @@ public interface PermissionDAO {
     int deleteGroup(GroupUser groupUser);
     List<UserInfo> queryUsers();
     int addGroupUser(JSONObject json);
+    List<Map<String, Object>> queryGroupUsers(JSONObject json);
+    int deleteGroupUser(JSONObject json);
 }
