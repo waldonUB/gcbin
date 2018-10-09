@@ -53,8 +53,8 @@ public class PermissionDAOImpl implements PermissionDAO {
     }
 
     @Override
-    public List<UserInfo> queryUsers() {
-        return sqlSession.selectList("cn.wdq.mapping.PermissionDAO.queryUsers");
+    public List<UserInfo> queryUsers(JSONObject json) {
+        return sqlSession.selectList("cn.wdq.mapping.PermissionDAO.queryUsers", json);
     }
 
     @Override

@@ -19,7 +19,7 @@
         delete from group_permission where group_code = #{groupCode}
     </delete>
     <insert id="saveGroup" parameterType="cn.wdq.entities.GroupUser" useGeneratedKeys="true" keyProperty="pk_group">
-      insert into group_user(pk_group, group_code, group_name) values (#{pk_group}, #{groupCode}, #{groupName})
+      insert into group_user(group_code, group_name) values (#{groupCode}, #{groupName})
     </insert>
     <select id="getGroupList" resultType="cn.wdq.entities.GroupUser">
         select pk_group, group_code as groupCode, group_name as groupName from group_user
@@ -27,8 +27,11 @@
     <delete id="deleteGroup" parameterType="cn.wdq.entities.GroupUser">
         delete from group_user where pk_group = #{pk_group}
     </delete>
-    <select id="queryUsers" resultType="cn.wdq.entities.UserInfo">
+    <select id="queryUsers" resultType="cn.wdq.entities.UserInfo" parameterType="com.alibaba.fastjson.JSONObject">
         select cuserid, user_name from sm_user
+        <if test="user_name != null">
+          where user_name like "%"#{user_name}"%"
+        </if>
     </select>
     <update id="addGroupUser" parameterType="com.alibaba.fastjson.JSONObject">
         update sm_user set group_code = #{groupCode} where cuserid = #{cuserid}

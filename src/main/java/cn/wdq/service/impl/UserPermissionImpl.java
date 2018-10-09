@@ -54,8 +54,8 @@ public class UserPermissionImpl implements UserPermission {
     }
 
     @Override
-    public List<UserInfo> queryUsers() {
-        return permissionDAO.queryUsers();
+    public List<UserInfo> queryUsers(JSONObject json) {
+        return permissionDAO.queryUsers(json);
     }
 
     @Override

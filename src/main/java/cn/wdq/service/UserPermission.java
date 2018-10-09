@@ -16,7 +16,7 @@ public interface UserPermission {
     List<GroupUser> getGroupList();
     int saveGroup(GroupUser groupUser);
     int deleteGroup(GroupUser groupUser);
-    List<UserInfo> queryUsers();
+    List<UserInfo> queryUsers(JSONObject json);
     int addGroupUser(JSONObject json);
     List<Map<String, Object>> queryGroupUsers(JSONObject json);
     int deleteGroupUser(JSONObject json);

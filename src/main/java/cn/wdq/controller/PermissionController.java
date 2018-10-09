@@ -6,6 +6,7 @@ import cn.wdq.entities.ReturnModel;
 import cn.wdq.entities.UserInfo;
 import cn.wdq.service.UserPermission;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -113,9 +114,12 @@ public class PermissionController {
      * */
     @RequestMapping("/queryUsers")
     @ResponseBody
-    public ReturnModel queryUsers () {
+    public ReturnModel queryUsers (@RequestBody JSONObject json) {
         ReturnModel model = new ReturnModel();
-        List<UserInfo> list = userPermission.queryUsers();
+        if (StringUtils.isEmpty(json.getString("user_name").trim())) {
+            json.put("user_name", null);
+        }
+        List<UserInfo> list = userPermission.queryUsers(json);
         model.setData(list);
         model.setSuccess(true);
         return model;

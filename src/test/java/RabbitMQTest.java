@@ -3,7 +3,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 public class RabbitMQTest {
-    private final static String QUEUE_NAME = "hello";
+    public final static String QUEUE_NAME = "rabbitMQ.test";
 
     public static void main(String[] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
@@ -16,6 +16,5 @@ public class RabbitMQTest {
         System.out.println("[x] sent '" + message + "'");
         channel.close();
         connection.close();
-
     }
 }
