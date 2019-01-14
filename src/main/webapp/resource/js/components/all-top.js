@@ -379,6 +379,7 @@ Vue.component("top",{
          * */
         queryPermissionTree () {
             const vm = this
+            debugger
             $.ajax({
                 url:'/gcbin/permission/queryPermissionTree',
                 data:JSON.stringify({"groupCode": topDatas.userInfo.group_code}),
