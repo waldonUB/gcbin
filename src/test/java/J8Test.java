@@ -1,3 +1,4 @@
+import com.alibaba.fastjson.JSONArray;
 import org.junit.Test;
 
 import java.time.Instant;
@@ -18,6 +19,12 @@ public class J8Test implements DefaultImpl {
         LocalDate localDate = LocalDate.now();
         System.out.println(localDate);
         System.out.println(instant);
+    }
+
+    @Test
+    public void jsonTest() {
+        String brand = "[{brand: \"666\"}]";
+        JSONArray jsonArray = JSONArray.parseArray(brand);
     }
 
     @Override

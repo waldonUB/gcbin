@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping
@@ -33,7 +34,8 @@ public class TestController {
 
     @RequestMapping("/testParameter")
     @ResponseBody
-    public String testParameter(@RequestParam("test") String str) {
+    public String testParameter(String str, Integer date) {
+        int a = 1/0;
         return "";
     }
 
