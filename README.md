@@ -14,13 +14,15 @@
 2.增加微信登录接口<br/>
 3.根据不同用户在权限树配置的权限，显示不同的导航栏菜单<br/>
 ###效果：
-图表和地图<br>
+图表和地图<br/>
+采用echarts图表绘制,根据后台数据自动生成图形界面<br/>
 ![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/index.gif)
-导航栏节点注册<br>
+导航栏节点注册<br/>
+整个系统的导航栏采用最原生的方式,根据用户表,角色表和权限表的对应关系,生成对应的权限节点的数据,再在前台递归取数,可以生成无限层级的节点. <br/>
+这里是html内的写法,vue组件写法的方式移步[gc-vue](https://github.com/waldonUB/gc-vue) <br/>
 ![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/tree.gif)
-话题交流<br>
+话题交流<br/>
 ![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/community.gif)
-Druid连接池监控<br>
-![image](https://github.com/qq852727515/imageSave/blob/master/petsCT_img/druid.gif)
+
 
 
