@@ -27,6 +27,17 @@ public class J8Test implements DefaultImpl {
         JSONArray jsonArray = JSONArray.parseArray(brand);
     }
 
+    @Test
+    public void stringTest() {
+        String str = "1";
+        String str2 = "6";
+        stringMuti(str, str, str2);
+    }
+
+    public void stringMuti(String... strings) { // 其实是个String[]
+        String[] strings1 = strings;
+        System.out.println(strings);
+    }
     @Override
     public int foo() {
         return 0;
