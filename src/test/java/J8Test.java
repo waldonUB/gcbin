@@ -3,6 +3,9 @@ import org.junit.Test;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import java.util.Random;
 
 public class J8Test implements DefaultImpl {
@@ -37,6 +40,9 @@ public class J8Test implements DefaultImpl {
     public void stringMuti(String... strings) { // 其实是个String[]
         String[] strings1 = strings;
         System.out.println(strings);
+        List<String> list = new ArrayList<>();
+        list.add("");
+        boolean b = list.stream().anyMatch(str -> str.equals(""));
     }
     @Override
     public int foo() {
