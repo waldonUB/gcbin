@@ -1,5 +1,5 @@
 ## gcbin
-#### 该项目为2017年实习做的demo项目，主要框架为：SSM+Vue.js。[点击跳转到服务器](http://47.106.190.36:8080/gcbin/)（因近期淘宝解析IP的服务不稳定，可能会出现无法定位地址的情况，如果不能注册，请使用管理员账号：admin  密码：2） <br/>
+#### 该项目为2017年的JavaWeb项目，主要框架为：SSM+Vue.js。[点击跳转到服务器](http://47.106.190.36:8080/gcbin/)（因近期淘宝解析IP的服务不稳定，可能会出现无法定位地址的情况，如果不能注册，请使用管理员账号：admin  密码：2） <br/>
 #### 查看基于SVG和VUE的前端流程设计器的简单Demo请移步[SVGDemo](https://github.com/waldonUB/SVGDemo)<br/>
 #### 查看springboot+vue全家桶的后端部分项目请移步[gcMybatisPlus](https://github.com/waldonUB/gcMybatisPlus) <br/>
 
